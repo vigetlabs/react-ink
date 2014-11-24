@@ -4,7 +4,7 @@
 
 Add ink to any react component.
 
-![Ink Gif](http://cl.ly/image/0M071m0B440h/ink.gif)
+![Ink Gif](http://cl.ly/image/1r36102z0M3r/ink.gif)
 
 ## Usage
 
