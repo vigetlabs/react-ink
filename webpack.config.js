@@ -11,7 +11,7 @@ module.exports = {
   },
 
   externals: {
-    'react': 'commonjs2'
+    'react': 'react'
   },
 
   resolve: {
