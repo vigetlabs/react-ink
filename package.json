@@ -1,0 +1,24 @@
+{
+  "name": "react-ink",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "git@github.com:vigetlabs/react-ink.git"
+  },
+  "keywords": ["react", "material design"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest-cli": "^0.1.18",
+    "jsx-loader": "^0.12.2",
+    "webpack": "^1.4.13"
+  },
+  "peerDependencies": {
+    "react": "0.12.x"
+  }
+}
