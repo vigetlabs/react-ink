@@ -1,6 +1,6 @@
 {
   "name": "react-ink",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/ink.js",
   "scripts": {
@@ -32,11 +32,11 @@
     "jest-cli": "^0.1.18",
     "jsx-loader": "^0.12.2",
     "react": "^0.12.1",
+    "react-tools": "^0.12.1",
     "webpack": "^1.4.13",
     "webpack-dev-server": "^1.6.6"
   },
   "peerDependencies": {
-    "react": "0.12.x",
-    "react-tools": "0.12.x"
+    "react": "0.12.x"
   }
 }
