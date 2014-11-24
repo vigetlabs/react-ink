@@ -1,6 +1,6 @@
 {
   "name": "react-ink",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/ink.js",
   "scripts": {
@@ -16,10 +16,9 @@
     "material design"
   ],
   "jest": {
-    "scriptPreprocessor": "<rootDir>/test/jestPreprocessor.js",
+    "scriptPreprocessor": "<rootDir>/jestPreprocessor.js",
     "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/immutable"
+      "<rootDir>/node_modules/react"
     ],
     "globals": {
       "__DEV__": true
@@ -33,7 +32,8 @@
     "jest-cli": "^0.1.18",
     "jsx-loader": "^0.12.2",
     "react": "^0.12.1",
-    "webpack": "^1.4.13"
+    "webpack": "^1.4.13",
+    "webpack-dev-server": "^1.6.6"
   },
   "peerDependencies": {
     "react": "0.12.x"

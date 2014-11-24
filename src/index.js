@@ -6,8 +6,8 @@
  */
 
 var React   = require('react');
-var Store   = require('./lib/store');
-var now     = require('./lib/now');
+var Store   = require('./util/store');
+var now     = require('./util/now');
 var Pure    = require('./mixins/pure');
 var InRange = require('./types/inRange');
 var AtLeast = require('./types/atLeast');

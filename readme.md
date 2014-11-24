@@ -1,6 +1,8 @@
 # React Ink
 
-Add ink to any react component. Work in progress!
+[![Build Status](https://travis-ci.org/vigetlabs/washi.png?branch=master)](https://travis-ci.org/vigetlabs/washi)
+
+Add ink to any react component.
 
 ```js
 var React = require('react');

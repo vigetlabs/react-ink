@@ -2,16 +2,12 @@ var Path = require('path');
 var WebPack = require('webpack');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './index.js',
 
   output: {
-    libraryTarget: 'umd',
-    path: Path.resolve(__dirname, 'dist'),
-    filename: 'ink.js'
-  },
-
-  externals: {
-    'react': 'react'
+    path: __dirname,
+    publicPath: './',
+    filename: 'example.build.js'
   },
 
   resolve: {
