@@ -4,6 +4,8 @@
 
 Add ink to any react component.
 
+![Ink Gif](http://cl.ly/image/0M071m0B440h/ink.gif)
+
 ## Usage
 
 Include `./ink.css` within your stylesheet build process. Then you can include the `<Ink />` component like so:
