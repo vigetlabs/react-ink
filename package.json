@@ -1,6 +1,6 @@
 {
   "name": "react-ink",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/ink.js",
   "scripts": {
@@ -36,6 +36,7 @@
     "webpack-dev-server": "^1.6.6"
   },
   "peerDependencies": {
-    "react": "0.12.x"
+    "react": "0.12.x",
+    "react-tools": "0.12.x"
   }
 }
