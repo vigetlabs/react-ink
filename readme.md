@@ -1,6 +1,6 @@
 # React Ink
 
-[![Build Status](https://travis-ci.org/vigetlabs/washi.png?branch=master)](https://travis-ci.org/vigetlabs/washi)
+[![Build Status](https://travis-ci.org/vigetlabs/react-ink.png?branch=master)](https://travis-ci.org/vigetlabs/react-ink)
 
 Add ink to any react component.
 
