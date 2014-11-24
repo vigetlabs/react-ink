@@ -5,11 +5,14 @@
  * events with a rippling pool.
  */
 
-var React = require('react/addons');
-var Store = require('./lib/store');
-var now   = require('../../../lib/now');
-var Pure  = React.addons.PureRenderMixin;
-var Types = React.PropTypes;
+var React   = require('react');
+var Store   = require('./lib/store');
+var now     = require('./lib/now');
+var Pure    = require('./mixins/pure');
+var InRange = require('./types/inRange');
+var AtLeast = require('./types/atLeast');
+
+var Types   = React.PropTypes;
 
 var MOUSE_LEFT = 0;
 
@@ -19,6 +22,9 @@ var Ink = React.createClass({
 
   propTypes: {
     background : Types.bool,
+    duration   : AtLeast(0),
+    opacity    : InRange(0, 1),
+    radius     : AtLeast(0),
     recenter   : Types.bool
   },
 

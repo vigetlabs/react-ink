@@ -2,20 +2,39 @@
   "name": "react-ink",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/ink.js",
   "scripts": {
+    "production": "./scripts/production",
+    "deploy": "./scripts/deploy",
     "test": "jest"
   },
   "repository": {
-    "type" : "git",
-    "url" : "git@github.com:vigetlabs/react-ink.git"
+    "type": "git",
+    "url": "git@github.com:vigetlabs/react-ink.git"
   },
-  "keywords": ["react", "material design"],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "react",
+    "material design"
+  ],
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/test/jestPreprocessor.js",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react",
+      "<rootDir>/node_modules/immutable"
+    ],
+    "globals": {
+      "__DEV__": true
+    }
+  },
+  "author": "Nate Hunzaker",
+  "license": "MIT",
   "devDependencies": {
+    "envify": "^1.2.1",
+    "envify-loader": "^0.1.0",
     "jest-cli": "^0.1.18",
     "jsx-loader": "^0.12.2",
+    "react": "^0.12.1",
+    "rf-release": "^0.3.2",
     "webpack": "^1.4.13"
   },
   "peerDependencies": {
