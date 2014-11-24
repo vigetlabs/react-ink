@@ -1,2 +1,5 @@
 __tests__
 webpack.config.js
+jestPreprocessor.js
+examples
+scripts
