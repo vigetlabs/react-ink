@@ -101,7 +101,8 @@ let Ink = React.createClass({
            onTouchLeave={ this._onRelease }
            onMouseDown={ this._onPress }
            onMouseUp={ this._onRelease }
-           onMouseLeave={ this._onRelease }>
+           onMouseLeave={ this._onRelease }
+           onDragOver={ this._onRelease }>
         { this.state.store.map(this.makeBlot) }
         { this.getBackdrop() }
       </svg>
