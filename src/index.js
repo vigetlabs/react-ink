@@ -5,18 +5,18 @@
  * events with a rippling pool.
  */
 
-var React   = require('react');
-var Store   = require('./util/store');
-var now     = require('./util/now');
-var Pure    = require('./mixins/pure');
-var InRange = require('./types/inRange');
-var AtLeast = require('./types/atLeast');
+let React   = require('react')
+let Store   = require('./util/store')
+let now     = require('./util/now')
+let Pure    = require('./mixins/pure')
+let InRange = require('./types/inRange')
+let AtLeast = require('./types/atLeast')
 
-var Types   = React.PropTypes;
+let Types   = React.PropTypes
 
-var MOUSE_LEFT = 0;
+let MOUSE_LEFT = 0
 
-var Ink = React.createClass({
+let Ink = React.createClass({
 
   mixins: [ Pure ],
 
@@ -35,7 +35,7 @@ var Ink = React.createClass({
       opacity    : 0.2,
       radius     : 150,
       recenter   : true
-    };
+    }
   },
 
   getInitialState() {
@@ -45,21 +45,21 @@ var Ink = React.createClass({
   },
 
   tick() {
-    this.forceUpdate();
+    this.forceUpdate()
   },
 
   componentDidMount() {
-    this.state.store.subscribe(this.tick);
+    this.state.store.subscribe(this.tick)
   },
 
   componentWillUnmount() {
-    this.state.store.dispose();
+    this.state.store.dispose()
   },
 
   pushBlot(event) {
-    var bounds = this.getDOMNode().getBoundingClientRect();
-    var height = bounds.bottom - bounds.top;
-    var width  = bounds.right - bounds.left;
+    let bounds = this.getDOMNode().getBoundingClientRect()
+    let height = bounds.bottom - bounds.top
+    let width  = bounds.right - bounds.left
 
     this.state.store.add({
       duration     : this.props.duration,
@@ -73,22 +73,22 @@ var Ink = React.createClass({
       size         : Math.max(height, width),
       height       : height,
       width        : width
-    });
+    })
   },
 
   popBlot() {
-    this.state.store.release(now());
+    this.state.store.release(now())
   },
 
   makeBlot(blot, i) {
     return (
       <circle key={ i } r={ blot.radius } opacity={ blot.opacity } transform={ blot.transform } />
-    );
+    )
   },
 
   getBackdrop() {
-    var opacity = this.props.background ? this.state.store.getTotalOpacity() : 0;
-    return <rect width="100%" height="100%" opacity={ opacity } />;
+    let opacity = this.props.background ? this.state.store.getTotalOpacity() : 0
+    return <rect key="__backdrop" width="100%" height="100%" opacity={ opacity } />
   },
 
   render() {
@@ -102,27 +102,27 @@ var Ink = React.createClass({
            onMouseDown={ this._onPress }
            onMouseUp={ this._onRelease }
            onMouseLeave={ this._onRelease }>
+        { this.state.store.map(this.makeBlot) }
         { this.getBackdrop() }
-      { this.state.store.map(this.makeBlot) }
       </svg>
-    );
+    )
   },
 
   _onPress(e) {
-    var { button, ctrlKey, touches } = e;
+    let { button, ctrlKey, touches } = e
 
     if (touches) {
-      for (var i = 0; i < touches.length; i++) {
-        this.pushBlot(touches[i]);
+      for (let touch of touches) {
+        this.pushBlot(touch)
       }
     } else if (button === MOUSE_LEFT && !ctrlKey) {
-      this.pushBlot(e);
+      this.pushBlot(e)
     }
   },
 
   _onRelease(e) {
-    this.popBlot();
+    this.popBlot()
   }
-});
+})
 
-module.exports = Ink;
+module.exports = Ink
