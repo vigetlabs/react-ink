@@ -5,16 +5,18 @@
  * events with a rippling pool.
  */
 
-let React   = require('react')
-let Store   = require('./util/store')
-let now     = require('./util/now')
-let Pure    = require('./mixins/pure')
-let InRange = require('./types/inRange')
-let AtLeast = require('./types/atLeast')
+let React     = require('react')
+let Store     = require('./util/store')
+let now       = require('./util/now')
+let Pure      = require('./mixins/pure')
+let InRange   = require('./types/inRange')
+let AtLeast   = require('./types/atLeast')
+let HAS_TOUCH = require('./util/hasTouch')
 
 let Types   = React.PropTypes
 
 let MOUSE_LEFT = 0
+
 
 let Ink = React.createClass({
 
@@ -82,7 +84,7 @@ let Ink = React.createClass({
 
   makeBlot(blot, i) {
     return (
-      <circle key={ i } r={ blot.radius } opacity={ blot.opacity } transform={ blot.transform } />
+        <circle key={ i } r={ blot.radius } opacity={ blot.opacity } transform={ blot.transform } />
     )
   },
 
@@ -91,20 +93,24 @@ let Ink = React.createClass({
     return <rect key="__backdrop" width="100%" height="100%" opacity={ opacity } />
   },
 
+  touchEvents() {
+    return HAS_TOUCH ? {
+      onTouchStart  : this._onPress,
+      onTouchEnd    : this._onRelease,
+      onTouchCancel : this._onRelease,
+      onTouchLeave  : this._onRelease
+    } : {
+      onMouseDown   : this._onPress,
+      onMouseUp     : this._onRelease,
+      onMouseLeave  : this._onRelease,
+    }
+  },
+
   render() {
     return (
-      <svg className="ink"
-           style={{ color: this.props.color }}
-           onTouchStart={ this._onPress }
-           onTouchEnd={ this._onRelease }
-           onTouchCancel={ this._onRelease }
-           onTouchLeave={ this._onRelease }
-           onMouseDown={ this._onPress }
-           onMouseUp={ this._onRelease }
-           onMouseLeave={ this._onRelease }
-           onDragOver={ this._onRelease }>
+        <svg className="ink" style={{ color: this.props.color }} onDragOver={ this._onRelease } { ...this.touchEvents() }>
         { this.state.store.map(this.makeBlot) }
-        { this.getBackdrop() }
+      { this.getBackdrop() }
       </svg>
     )
   },
@@ -113,8 +119,8 @@ let Ink = React.createClass({
     let { button, ctrlKey, touches } = e
 
     if (touches) {
-      for (let touch of touches) {
-        this.pushBlot(touch)
+      for (var i = 0, len = touches.length; i < len; i++) {
+        this.pushBlot(touches[i])
       }
     } else if (button === MOUSE_LEFT && !ctrlKey) {
       this.pushBlot(e)
@@ -122,7 +128,7 @@ let Ink = React.createClass({
   },
 
   _onRelease(e) {
-    this.popBlot()
+    requestAnimationFrame(this.popBlot)
   }
 })
 

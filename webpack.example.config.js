@@ -2,12 +2,14 @@ var Path    = require('path');
 var WebPack = require('webpack');
 
 module.exports = {
-  entry: './example/index.js',
+  entry: {
+    'example.build': './example/index.js'
+  },
 
   output: {
-    path: Path.join(__dirname, 'example'),
-    publicPath: './example',
-    filename: 'example.build.js'
+    path: './example',
+    publicPath: 'example',
+    filename: '[name].js'
   },
 
   resolve: {
