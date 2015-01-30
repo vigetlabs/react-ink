@@ -20,7 +20,7 @@ module.exports = {
       {
         test    : /\.jsx*$/,
         exclude : /node_modules/,
-        loader  : 'envify!6to5?experimental&optional=selfContained'
+        loader  : 'envify!6to5?experimental'
       },
       {
         test    : /\.json$/,
