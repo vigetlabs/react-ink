@@ -8,8 +8,6 @@
 let React      = require('react')
 let Store      = require('./util/store')
 let now        = require('./util/now')
-let InRange    = require('./types/inRange')
-let AtLeast    = require('./types/atLeast')
 let HAS_TOUCH  = require('./util/hasTouch')
 let Types      = React.PropTypes
 let MOUSE_LEFT = 0
@@ -22,9 +20,9 @@ let Ink = React.createClass({
 
   propTypes: {
     background : Types.bool,
-    duration   : AtLeast(0),
-    opacity    : InRange(0, 1),
-    radius     : AtLeast(0),
+    duration   : Types.number,
+    opacity    : Types.number,
+    radius     : Types.number,
     recenter   : Types.bool
   },
 
@@ -125,7 +123,7 @@ let Ink = React.createClass({
     }
   },
 
-  _onRelease(e) {
+  _onRelease() {
     requestAnimationFrame(this.popBlot)
   }
 })

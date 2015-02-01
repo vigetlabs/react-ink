@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/index.js',
 
   output: {
-    libraryTarget: 'umd',
+    libraryTarget: 'commonjs2',
     path: Path.resolve(__dirname, 'dist'),
     filename: 'ink.js'
   },
