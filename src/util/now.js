@@ -1,9 +1,7 @@
-var now = Date.now || function() {
-  return +new Date();
-};
+var now = Date.now
 
 if (typeof performance !== 'undefined' && performance.now) {
-  now = performance.now.bind(performance);
+  now = performance.now.bind(performance)
 }
 
-module.exports = now;
+module.exports = now

@@ -1,4 +1,5 @@
-var React = require('react');
+var React = require('react/addons');
+var Test  = React.addons.TestUtils
 var Ink   = require('../src');
 
 var Component = React.createClass({
@@ -7,7 +8,7 @@ var Component = React.createClass({
     return (
       <div>
         <h1>Click anywhere!</h1>
-        <Ink color="red"/>
+        <Ink ref="background" style={{ color: 'red' }} />
         <button style={{ position: 'relative' }} onClick={ this._onClick }>
           Buttons Too!
           <Ink key="__ink" />
@@ -22,4 +23,21 @@ var Component = React.createClass({
 
 });
 
-React.render(<Component />, document.body);
+let component = React.render(<Component />, document.body);
+let delta = Date.now()
+
+requestAnimationFrame(function click() {
+  if (Date.now() - delta > 100) {
+    delta = Date.now()
+    let dom = component.refs.background.getDOMNode()
+
+    Test.Simulate.mouseDown(dom, {
+      button: 0,
+      clientX: Math.random() * window.innerWidth,
+      clientY: Math.random() * window.innerHeight
+    })
+
+    Test.Simulate.mouseUp(dom)
+  }
+  requestAnimationFrame(click)
+})

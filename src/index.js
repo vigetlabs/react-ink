@@ -5,22 +5,20 @@
  * events with a rippling pool.
  */
 
-let React     = require('react')
-let Store     = require('./util/store')
-let now       = require('./util/now')
-let Pure      = require('./mixins/pure')
-let InRange   = require('./types/inRange')
-let AtLeast   = require('./types/atLeast')
-let HAS_TOUCH = require('./util/hasTouch')
-
-let Types   = React.PropTypes
-
+let React      = require('react')
+let Store      = require('./util/store')
+let now        = require('./util/now')
+let InRange    = require('./types/inRange')
+let AtLeast    = require('./types/atLeast')
+let HAS_TOUCH  = require('./util/hasTouch')
+let Types      = React.PropTypes
 let MOUSE_LEFT = 0
-
 
 let Ink = React.createClass({
 
-  mixins: [ Pure ],
+  shouldComponentUpdate(props, state) {
+    return state.frame !== this.state.frame
+  },
 
   propTypes: {
     background : Types.bool,
@@ -42,39 +40,37 @@ let Ink = React.createClass({
 
   getInitialState() {
     return {
-      store : Store()
+      store : Store(this.tick)
     }
   },
 
-  tick() {
-    this.forceUpdate()
-  },
-
-  componentDidMount() {
-    this.state.store.subscribe(this.tick)
+  tick(frame) {
+    this.setState({ frame})
   },
 
   componentWillUnmount() {
-    this.state.store.dispose()
+    this.state.store.stop()
   },
 
   pushBlot(event) {
-    let bounds = this.getDOMNode().getBoundingClientRect()
-    let height = bounds.bottom - bounds.top
-    let width  = bounds.right - bounds.left
+    let { top, bottom, left, right } = this.getDOMNode().getBoundingClientRect()
+
+    let height = bottom - top
+    let width  = right - left
+    let size   = Math.max(height, width)
 
     this.state.store.add({
-      duration     : this.props.duration,
-      maxOpacity   : this.props.opacity,
-      mouseDown    : now(),
-      mouseUp      : 0,
-      radius       : Math.min(this.props.radius, Math.max(height, width)),
-      recenter     : this.props.recenter,
-      x            : event.clientX - bounds.left,
-      y            : event.clientY - bounds.top,
-      size         : Math.max(height, width),
-      height       : height,
-      width        : width
+      duration   : this.props.duration,
+      maxOpacity : this.props.opacity,
+      mouseDown  : now(),
+      mouseUp    : 0,
+      radius     : Math.min(this.props.radius, size),
+      recenter   : this.props.recenter,
+      x          : event.clientX - left,
+      y          : event.clientY - top,
+      size       : size,
+      height     : height,
+      width      : width
     })
   },
 
@@ -82,35 +78,37 @@ let Ink = React.createClass({
     this.state.store.release(now())
   },
 
-  makeBlot(blot, i) {
-    return (
-        <circle key={ i } r={ blot.radius } opacity={ blot.opacity } transform={ blot.transform } />
-    )
+  makeBlot({ radius, opacity, transform }, i) {
+    return <circle key={ i } r={ radius } opacity={ opacity } transform={ transform } />
   },
 
   getBackdrop() {
     let opacity = this.props.background ? this.state.store.getTotalOpacity() : 0
-    return <rect key="__backdrop" width="100%" height="100%" opacity={ opacity } />
+    return <rect width="100%" height="100%" opacity={ opacity } />
   },
 
   touchEvents() {
-    return HAS_TOUCH ? {
-      onTouchStart  : this._onPress,
-      onTouchEnd    : this._onRelease,
-      onTouchCancel : this._onRelease,
-      onTouchLeave  : this._onRelease
-    } : {
-      onMouseDown   : this._onPress,
-      onMouseUp     : this._onRelease,
-      onMouseLeave  : this._onRelease,
+    if (HAS_TOUCH) {
+      return {
+        onTouchStart  : this._onPress,
+        onTouchEnd    : this._onRelease,
+        onTouchCancel : this._onRelease,
+        onTouchLeave  : this._onRelease
+      }
+    } else {
+      return {
+        onMouseDown   : this._onPress,
+        onMouseUp     : this._onRelease,
+        onMouseLeave  : this._onRelease
+      }
     }
   },
 
   render() {
     return (
-        <svg className="ink" style={{ color: this.props.color }} onDragOver={ this._onRelease } { ...this.touchEvents() }>
+      <svg className="ink" style={ this.props.style } onDragOver={ this._onRelease } { ...this.touchEvents() }>
         { this.state.store.map(this.makeBlot) }
-      { this.getBackdrop() }
+        { this.getBackdrop() }
       </svg>
     )
   },

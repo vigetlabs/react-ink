@@ -1,7 +1,7 @@
 {
   "name": "react-ink",
-  "version": "2.2.1",
-  "description": "",
+  "version": "2.3.0",
+  "description": "A React component for adding material design style ink.",
   "main": "dist/ink.js",
   "scripts": {
     "start": "webpack-dev-server --config=webpack.example.config.js",
@@ -17,7 +17,7 @@
     "material design"
   ],
   "jest": {
-    "scriptPreprocessor": "<rootDir>/jestPreprocessor.js",
+    "scriptPreprocessor": "<rootDir>/node_modules/6to5-jest",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react"
     ],
@@ -29,6 +29,7 @@
   "license": "MIT",
   "devDependencies": {
     "6to5": "^3.1.1",
+    "6to5-jest": "^3.0.0",
     "6to5-loader": "^3.0.0",
     "6to5-runtime": "^3.1.1",
     "envify": "^1.2.1",

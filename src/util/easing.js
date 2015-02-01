@@ -5,14 +5,6 @@
  * @d is the total time of the tween.
  */
 
-module.exports = {
-
-  easeOutSin: function(time, beginning, change, duration) {
-    return change * Math.sin(time / duration * (Math.PI / 2)) + beginning;
-  },
-
-  easeOutQuint: function(t, b, c, d) {
-    return c*((t=t/d-1)*t*t*t*t + 1) + b;
-  }
-
-};
+module.exports = function easeOutQuint (t, b, c, d) {
+  return c*((t=t/d-1)*t*t*t*t + 1) + b
+}

@@ -9,6 +9,11 @@
   transform: translateZ(0);
   user-select: none;
   width: 100%;
+  will-change: all;
+}
+
+.ink * {
+  will-change: all
 }
 
 .ink:focus {

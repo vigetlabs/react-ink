@@ -1,31 +1,18 @@
-jest.dontMock('../store');
-jest.dontMock('../equations');
+jest.dontMock('../store')
+jest.dontMock('../equations')
 
 describe('Ink Store', function() {
-  var Store = require('../store');
+  var Store = require('../store')
+
+  window.cancelAnimationFrame = jest.genMockFunction()
 
   it ('can be subscribed to', function() {
-    var store = Store();
-    var callback = jest.genMockFunction();
+    var callback = jest.genMockFunction()
+    var store    = Store(callback)
 
-    store.subscribe(callback);
-    store.publicize();
+    store.update()
 
-    expect(callback).toBeCalled();
-  });
+    expect(callback).toBeCalled()
+  })
 
-  it ('can be disposed of', function() {
-    var store = Store();
-    var callback = jest.genMockFunction();
-
-    // Work around cancelAnimationFrame issues
-    window.cancelAnimationFrame = jest.genMockFunction();
-
-    store.subscribe(callback);
-    store.dispose();
-    store.publicize();
-
-    expect(callback).not.toBeCalled();
-  });
-
-});
+})
