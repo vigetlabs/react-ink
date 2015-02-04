@@ -1,6 +1,6 @@
 var React = require('react/addons');
 var Test  = React.addons.TestUtils
-var Ink   = require('../src');
+var Ink   = require('../src/index');
 
 var Component = React.createClass({
 

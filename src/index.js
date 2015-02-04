@@ -12,6 +12,8 @@ let HAS_TOUCH  = require('./util/hasTouch')
 let Types      = React.PropTypes
 let MOUSE_LEFT = 0
 
+let STYLE      = require('./style')
+
 let Ink = React.createClass({
 
   shouldComponentUpdate(props, state) {
@@ -43,7 +45,9 @@ let Ink = React.createClass({
   },
 
   tick(frame) {
-    this.setState({ frame})
+    if (this.isMounted()) {
+      this.setState({ frame })
+    }
   },
 
   componentWillUnmount() {
@@ -103,8 +107,10 @@ let Ink = React.createClass({
   },
 
   render() {
+    let style = { ...STYLE, ...this.props.style }
+
     return (
-      <svg className="ink" style={ this.props.style } onDragOver={ this._onRelease } { ...this.touchEvents() }>
+      <svg className="ink" style={ style } onDragOver={ this._onRelease } { ...this.touchEvents() }>
         { this.state.store.map(this.makeBlot) }
         { this.getBackdrop() }
       </svg>
