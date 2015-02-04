@@ -8,8 +8,6 @@ Add ink to any react component.
 
 ## Usage
 
-Include `./ink.css` within your stylesheet build process. Then you can include the `<Ink />` component like so:
-
 ```js
 var React = require('react');
 var Ink = require('react-ink');
@@ -37,6 +35,7 @@ There are several options available for how `<Ink />` renders, see the [`getDefa
   duration   : 1500, // Duration of the full animation completion
   opacity    : 0.2,  // The opacity of the ink blob
   radius     : 150,  // The size of the effect, will not exceed bounds of containing element
-  recenter   : true  // When true, recenter will pull ink towards the center of the containing element
+  recenter   : true, // When true, recenter will pull ink towards the center of the containing element
+  style      : {...} // See src/style.js. Any rules set here will extend these values
 }
 ```
