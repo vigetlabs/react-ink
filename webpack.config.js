@@ -20,11 +20,17 @@ module.exports = {
   },
 
   module: {
+    preLoaders: [
+      {
+        test    : /\.jsx*$/,
+        loader  : 'transform?envify'
+      }
+    ],
     loaders: [
       {
         test    : /\.jsx*$/,
         exclude : /node_modules/,
-        loader  : 'envify!6to5?experimental'
+        loader  : '6to5?experimental'
       },
       {
         test    : /\.json$/,

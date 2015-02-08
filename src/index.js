@@ -5,19 +5,18 @@
  * events with a rippling pool.
  */
 
+let HAS_TOUCH  = require('./util/hasTouch')
 let React      = require('react')
+let STYLE      = require('./style')
 let Store      = require('./util/store')
 let now        = require('./util/now')
-let HAS_TOUCH  = require('./util/hasTouch')
-let Types      = React.PropTypes
 let MOUSE_LEFT = 0
-
-let STYLE      = require('./style')
+let Types      = React.PropTypes
 
 let Ink = React.createClass({
 
   shouldComponentUpdate(props, state) {
-    return state.frame !== this.state.frame
+    return !!state.frame
   },
 
   propTypes: {
@@ -32,6 +31,7 @@ let Ink = React.createClass({
     return {
       background : true,
       duration   : 1500,
+      fill       : 'currentColor',
       opacity    : 0.2,
       radius     : 150,
       recenter   : true
@@ -40,14 +40,30 @@ let Ink = React.createClass({
 
   getInitialState() {
     return {
-      store : Store(this.tick)
+      store       : Store(this.tick),
+      touchEvents : this.touchEvents()
+    }
+  },
+
+  touchEvents() {
+    if (HAS_TOUCH) {
+      return {
+        onTouchStart  : this._onPress,
+        onTouchEnd    : this._onRelease,
+        onTouchCancel : this._onRelease,
+        onTouchLeave  : this._onRelease
+      }
+    } else {
+      return {
+        onMouseDown   : this._onPress,
+        onMouseUp     : this._onRelease,
+        onMouseLeave  : this._onRelease
+      }
     }
   },
 
   tick(frame) {
-    if (this.isMounted()) {
-      this.setState({ frame })
-    }
+    this.setState({ frame })
   },
 
   componentWillUnmount() {
@@ -80,39 +96,23 @@ let Ink = React.createClass({
     this.state.store.release(now())
   },
 
-  makeBlot({ radius, opacity, transform }, i) {
-    return <circle key={ i } r={ radius } opacity={ opacity } transform={ transform } />
+  makeBlot({ radius, opacity, transform }, key) {
+    return <circle key={ key } r={ radius } opacity={ opacity } transform={ transform } />
   },
 
   getBackdrop() {
-    let opacity = this.props.background ? this.state.store.getTotalOpacity() : 0
-    return <rect width="100%" height="100%" opacity={ opacity } />
-  },
-
-  touchEvents() {
-    if (HAS_TOUCH) {
-      return {
-        onTouchStart  : this._onPress,
-        onTouchEnd    : this._onRelease,
-        onTouchCancel : this._onRelease,
-        onTouchLeave  : this._onRelease
-      }
-    } else {
-      return {
-        onMouseDown   : this._onPress,
-        onMouseUp     : this._onRelease,
-        onMouseLeave  : this._onRelease
-      }
-    }
+    return <rect width="100%" height="100%" opacity={ this.state.store.getTotalOpacity() } />
   },
 
   render() {
-    let style = { ...STYLE, ...this.props.style }
+    let { background, fill, style } = this.props
+    let { store, touchEvents } = this.state
+    let css = { ...STYLE, ...style }
 
     return (
-      <svg className="ink" style={ style } onDragOver={ this._onRelease } { ...this.touchEvents() }>
-        { this.state.store.map(this.makeBlot) }
-        { this.getBackdrop() }
+      <svg className="ink" style={ css } fill={ fill } { ...touchEvents } onDragOver={ this._onRelease }>
+        { store.map(this.makeBlot) }
+        { background && this.getBackdrop() }
       </svg>
     )
   },

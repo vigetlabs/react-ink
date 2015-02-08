@@ -48,15 +48,17 @@ module.exports = function(publicize) {
       }
     },
 
+    shouldPrune(blot) {
+      blot.opacity   = Equations.getBlotOpacity(blot)
+      blot.transform = Equations.getBlotTransform(blot)
+
+      _totalOpacity += Equations.getBlotOuterOpacity(blot)
+
+      return blot.opacity >= 0.01
+    },
+
     prune() {
-      _data = _data.filter(function(blot) {
-        blot.opacity   = Equations.getBlotOpacity(blot)
-        blot.transform = Equations.getBlotTransform(blot)
-
-        _totalOpacity += Equations.getBlotOuterOpacity(blot)
-
-        return blot.opacity >= 0.01
-      })
+      _data = _data.filter(this.shouldPrune)
     },
 
     add(props) {
@@ -64,12 +66,12 @@ module.exports = function(publicize) {
       Store.play()
     },
 
-    release(now) {
-      for (let i = 0, len = _data.length; i < len; i++) {
-        _data[i].mouseUp = _data[i].mouseUp || now
+    release(time) {
+      for (let i = _data.length - 1; i >= 0; i--) {
+        if (!_data[i].mouseUp) {
+          return _data[i].mouseUp = time
+        }
       }
-
-      Store.play()
     }
 
   }

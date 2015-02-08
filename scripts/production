@@ -3,7 +3,7 @@ echo
 echo "Building for production..."
 echo
 NODE_ENV=production
-webpack -vcp --optimize-minimize --optimize-occurence-order --optimize-dedupe
+webpack
 
 echo "gzipped, the global build is:"
 echo "`gzip -c dist/ink.js | wc -c` bytes"
