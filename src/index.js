@@ -70,8 +70,10 @@ let Ink = React.createClass({
     this.state.store.stop()
   },
 
-  pushBlot(event) {
-    let { top, bottom, left, right } = this.getDOMNode().getBoundingClientRect()
+  pushBlot(clientX, clientY) {
+    let rect = this.state.rect || this.getDOMNode().getBoundingClientRect()
+
+    let { top, bottom, left, right } = rect
 
     let height = bottom - top
     let width  = right - left
@@ -82,14 +84,18 @@ let Ink = React.createClass({
       maxOpacity : this.props.opacity,
       mouseDown  : now(),
       mouseUp    : 0,
-      radius     : Math.min(this.props.radius, size),
+      radius     : Math.min(size, this.props.radius),
       recenter   : this.props.recenter,
-      x          : event.clientX - left,
-      y          : event.clientY - top,
+      x          : clientX - left,
+      y          : clientY - top,
       size       : size,
       height     : height,
       width      : width
     })
+
+    if (!this.state.rect) {
+      this.setState({ rect })
+    }
   },
 
   popBlot() {
@@ -121,11 +127,14 @@ let Ink = React.createClass({
     let { button, ctrlKey, touches } = e
 
     if (touches) {
-      for (var i = 0, len = touches.length; i < len; i++) {
-        this.pushBlot(touches[i])
-      }
+      let presses = Array.prototype.slice.call(touches, 0).map(i => [i.clientX, i.clientY])
+
+      requestAnimationFrame(e => {
+        presses.forEach(touch => this.pushBlot.apply(this, touch))
+      })
     } else if (button === MOUSE_LEFT && !ctrlKey) {
-      this.pushBlot(e)
+      let { clientX, clientY } = e
+      requestAnimationFrame(() => this.pushBlot(clientX, clientY))
     }
   },
 

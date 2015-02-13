@@ -1,11 +1,11 @@
 {
   "name": "react-ink",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "A React component for adding material design style ink.",
   "main": "dist/ink.js",
   "scripts": {
     "start": "webpack-dev-server --config=webpack.example.config.js",
-    "prepublish": "webpack -pvcm && echo `gzip -c dist/ink.js | wc -c`",
+    "prepublish": "webpack -pcmv && echo `gzip -c dist/ink.js | wc -c`",
     "test": "jest"
   },
   "repository": {

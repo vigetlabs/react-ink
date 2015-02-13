@@ -1,8 +1,9 @@
-var React = require('react/addons');
-var Test  = React.addons.TestUtils
-var Ink   = require('../src/index');
+import React from 'react/addons'
+import Ink   from '../src/index'
 
-var Component = React.createClass({
+let Test = React.addons.TestUtils
+
+let Component = React.createClass({
 
   render() {
     return (
@@ -14,16 +15,16 @@ var Component = React.createClass({
           <Ink key="__ink" />
         </button>
       </div>
-    );
+    )
   },
 
   _onClick() {
     console.log('success')
   }
 
-});
+})
 
-let component = React.render(<Component />, document.body);
+let component = React.render(<Component />, document.body)
 let delta = Date.now()
 
 requestAnimationFrame(function click() {

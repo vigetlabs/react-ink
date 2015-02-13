@@ -4,5 +4,6 @@ module.exports = {
   left: 0,
   position: "absolute",
   top: 0,
-  width: "100%"
+  width: "100%",
+  willChange: 'transform, opacity'
 }

@@ -1,15 +1,13 @@
-var Path    = require('path');
-var WebPack = require('webpack');
+var Path    = require('path')
+var WebPack = require('webpack')
 
 module.exports = {
-  entry: {
-    'example.build': './example/index.js'
-  },
+  entry: './example/index.js',
 
   output: {
     path: './example',
     publicPath: 'example',
-    filename: '[name].js'
+    filename: 'example.build.js'
   },
 
   resolve: {
@@ -22,7 +20,7 @@ module.exports = {
       {
         test    : /\.jsx*$/,
         exclude : /node_modules/,
-        loader  : 'envify!6to5?experimental'
+        loader  : '6to5?experimental'
       },
       {
         test    : /\.json$/,
