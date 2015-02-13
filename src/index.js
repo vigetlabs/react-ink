@@ -71,9 +71,7 @@ let Ink = React.createClass({
   },
 
   pushBlot(clientX, clientY) {
-    let rect = this.state.rect || this.getDOMNode().getBoundingClientRect()
-
-    let { top, bottom, left, right } = rect
+    let { top, bottom, left, right }  = this.getDOMNode().getBoundingClientRect()
 
     let height = bottom - top
     let width  = right - left
@@ -92,10 +90,6 @@ let Ink = React.createClass({
       height     : height,
       width      : width
     })
-
-    if (!this.state.rect) {
-      this.setState({ rect })
-    }
   },
 
   popBlot() {
