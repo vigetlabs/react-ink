@@ -113,7 +113,8 @@ let Ink = React.createClass({
   },
 
   _onPress(e) {
-    let { button, ctrlKey, clientX, clientY, changedTouches, timeStamp } = e
+    let { button, ctrlKey, clientX, clientY, changedTouches } = e
+    let timeStamp = Date.now()
 
     if (changedTouches) {
       for (var i = 0; i < changedTouches.length; i++) {
@@ -125,8 +126,8 @@ let Ink = React.createClass({
     }
   },
 
-  _onRelease({ timeStamp }) {
-    this.popBlot(timeStamp)
+  _onRelease() {
+    this.popBlot(Date.now())
   }
 })
 
