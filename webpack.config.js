@@ -2,7 +2,7 @@ var Path = require('path')
 var WebPack = require('webpack')
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.jsx',
 
   output: {
     libraryTarget: 'commonjs2',

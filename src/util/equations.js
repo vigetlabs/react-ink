@@ -1,14 +1,13 @@
 let easing = require('./easing')
-let now    = require('./now')
 let min    = Math.min
 let SQRT_2 = Math.sqrt(2)
 
 function getPress(blot) {
-  return min(blot.duration, now() - blot.mouseDown)
+  return min(blot.duration, Date.now() - blot.mouseDown)
 }
 
 function getRelease(blot) {
-  return blot.mouseUp > 0 ? now() - blot.mouseUp : 0
+  return blot.mouseUp > 0 ? Date.now() - blot.mouseUp : 0
 }
 
 function getRadius(blot) {

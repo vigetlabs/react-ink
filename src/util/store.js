@@ -31,12 +31,12 @@ module.exports = function(publicize) {
     },
 
     getTotalOpacity() {
-      return _totalOpacity
+      return _data.reduce(function(memo, next) {
+        return memo + Equations.getBlotOuterOpacity(next)
+      }, 0)
     },
 
     update() {
-      _totalOpacity = 0
-
       Store.prune()
 
       publicize(_frame)
@@ -51,8 +51,6 @@ module.exports = function(publicize) {
     shouldPrune(blot) {
       blot.opacity   = Equations.getBlotOpacity(blot)
       blot.transform = Equations.getBlotTransform(blot)
-
-      _totalOpacity += Equations.getBlotOuterOpacity(blot)
 
       return blot.opacity >= 0.01
     },

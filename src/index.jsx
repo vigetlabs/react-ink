@@ -9,7 +9,6 @@ let HAS_TOUCH  = require('./util/hasTouch')
 let React      = require('react')
 let STYLE      = require('./style')
 let Store      = require('./util/store')
-let now        = require('./util/now')
 let MOUSE_LEFT = 0
 let Types      = React.PropTypes
 
@@ -70,7 +69,7 @@ let Ink = React.createClass({
     this.state.store.stop()
   },
 
-  pushBlot(clientX, clientY) {
+  pushBlot(timeStamp, clientX, clientY) {
     let { top, bottom, left, right }  = this.getDOMNode().getBoundingClientRect()
 
     let height = bottom - top
@@ -80,7 +79,7 @@ let Ink = React.createClass({
     this.state.store.add({
       duration   : this.props.duration,
       maxOpacity : this.props.opacity,
-      mouseDown  : now(),
+      mouseDown  : timeStamp,
       mouseUp    : 0,
       radius     : Math.min(size, this.props.radius),
       recenter   : this.props.recenter,
@@ -92,16 +91,12 @@ let Ink = React.createClass({
     })
   },
 
-  popBlot() {
-    this.state.store.release(now())
+  popBlot(time) {
+    this.state.store.release(time)
   },
 
-  makeBlot({ radius, opacity, transform }, key) {
-    return <circle key={ key } r={ radius } opacity={ opacity } transform={ transform } />
-  },
-
-  getBackdrop() {
-    return <rect width="100%" height="100%" opacity={ this.state.store.getTotalOpacity() } />
+  makeBlot({ radius:r, opacity:fillOpacity, transform }, key) {
+    return React.createElement('circle', { key, r, fillOpacity, transform })
   },
 
   render() {
@@ -112,28 +107,26 @@ let Ink = React.createClass({
     return (
       <svg className="ink" style={ css } fill={ fill } { ...touchEvents } onDragOver={ this._onRelease }>
         { store.map(this.makeBlot) }
-        { background && this.getBackdrop() }
+        <rect width="100%" height="100%" fillOpacity={ background ? this.state.store.getTotalOpacity() : 0 } />
       </svg>
     )
   },
 
   _onPress(e) {
-    let { button, ctrlKey, touches } = e
+    let { button, ctrlKey, clientX, clientY, changedTouches, timeStamp } = e
 
-    if (touches) {
-      let presses = Array.prototype.slice.call(touches, 0).map(i => [i.clientX, i.clientY])
-
-      requestAnimationFrame(e => {
-        presses.forEach(touch => this.pushBlot.apply(this, touch))
-      })
+    if (changedTouches) {
+      for (var i = 0; i < changedTouches.length; i++) {
+        let { clientX, clientY } = changedTouches[i]
+        this.pushBlot(timeStamp, clientX, clientY)
+      }
     } else if (button === MOUSE_LEFT && !ctrlKey) {
-      let { clientX, clientY } = e
-      requestAnimationFrame(() => this.pushBlot(clientX, clientY))
+      this.pushBlot(timeStamp, clientX, clientY)
     }
   },
 
-  _onRelease() {
-    requestAnimationFrame(this.popBlot)
+  _onRelease({ timeStamp }) {
+    this.popBlot(timeStamp)
   }
 })
 
