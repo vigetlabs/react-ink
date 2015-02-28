@@ -1,6 +1,5 @@
 module.exports = {
   borderRadius: "inherit",
-  color: "inherit",
   height: "100%",
   left: 0,
   position: "absolute",

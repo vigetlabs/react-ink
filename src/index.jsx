@@ -117,7 +117,8 @@ let Ink = React.createClass({
   },
 
   pushBlot(timeStamp, clientX, clientY) {
-    let el = this.getDOMNode()
+    let el    = this.getDOMNode()
+    let style = window.getComputedStyle(el)
 
     let { top, bottom, left, right } = el.getBoundingClientRect()
 
@@ -125,7 +126,7 @@ let Ink = React.createClass({
     let width  = right - left
 
     this.setState({
-      color  : el.style.color,
+      color  : style.color,
       ctx    : this.state.ctx || this.refs.canvas.getDOMNode().getContext('2d'),
       height : height,
       width  : width

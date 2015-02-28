@@ -9,7 +9,7 @@ let Component = React.createClass({
     return (
       <div>
         <h1>Click anywhere!</h1>
-        <Ink ref="background" style={{ color: 'red' }} />
+        <Ink ref="background" />
         <button style={{ position: 'relative' }} onClick={ this._onClick }>
           Buttons Too!
           <Ink key="__ink" />
