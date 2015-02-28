@@ -151,7 +151,7 @@ let Ink = React.createClass({
   render() {
     let { height, width, touchEvents } = this.state
 
-    let ratio = window.devicePixelRatio || 1
+    let ratio = global.devicePixelRatio || 1
 
     return (
       <canvas ref="canvas"
