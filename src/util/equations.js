@@ -20,26 +20,25 @@ function getRadius(blot) {
 module.exports = {
 
   getBlotOpacity(blot) {
-    return easing(getRelease(blot), blot.maxOpacity, -blot.maxOpacity, blot.duration)
+    return easing(getRelease(blot), blot.opacity, -blot.opacity, blot.duration)
   },
 
   getBlotOuterOpacity(blot) {
-    return min(blot.opacity, easing(getPress(blot), 0, 0.3, blot.duration * 3))
+    return min(this.getBlotOpacity(blot),
+               easing(getPress(blot), 0, 0.3, blot.duration * 3))
   },
 
-  getBlotTransform(blot) {
-    let { recenter, x, y, size, width, height } = blot
+  getBlotShiftX(blot, size, width) {
+    return min(1,
+               getRadius(blot) / size * 2 / SQRT_2) * (width / 2 - blot.x)
+  },
 
-    let radius = getRadius(blot)
+  getBlotShiftY(blot, size, height) {
+    return min(1,
+               getRadius(blot) / size * 2 / SQRT_2) * (height / 2 - blot.y)
+  },
 
-    if (recenter) {
-      let shift = min(1, radius / size * 2 / SQRT_2)
-      x += shift * (width / 2 - x)
-      y += shift * (height / 2 -y)
-    }
-
-    let scale = (radius / blot.radius)
-
-    return `translate(${ x },${ y }) scale(${ scale }, ${ scale }) `
+  getBlotScale(blot) {
+    return getRadius(blot) / blot.radius
   }
 }

@@ -9,7 +9,6 @@ var Equations = require('./equations')
 module.exports = function(publicize) {
   let _data = []
   let _playing = false
-  let _totalOpacity = 0
   let _frame
 
   let Store = {
@@ -49,10 +48,7 @@ module.exports = function(publicize) {
     },
 
     shouldPrune(blot) {
-      blot.opacity   = Equations.getBlotOpacity(blot)
-      blot.transform = Equations.getBlotTransform(blot)
-
-      return blot.opacity >= 0.01
+      return Equations.getBlotOpacity(blot) > 0.01
     },
 
     prune() {

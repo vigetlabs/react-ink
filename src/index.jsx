@@ -6,16 +6,27 @@
  */
 
 let HAS_TOUCH  = require('./util/hasTouch')
+let MOUSE_LEFT = 0
+let pixelRatio = require('./util/pixelRatio')
 let React      = require('react')
 let STYLE      = require('./style')
 let Store      = require('./util/store')
-let MOUSE_LEFT = 0
 let Types      = React.PropTypes
+let TAU        = Math.PI * 2
+let Equations  = require('./util/equations')
 
 let Ink = React.createClass({
 
   shouldComponentUpdate(props, state) {
-    return !!state.frame
+    for (let p in props) {
+      if (this.props[p] !== props[p]) return true
+    }
+
+    for (let s in state) {
+      if (this.state[s] !== state[s]) return true
+    }
+
+    return false
   },
 
   propTypes: {
@@ -30,7 +41,6 @@ let Ink = React.createClass({
     return {
       background : true,
       duration   : 1500,
-      fill       : 'currentColor',
       opacity    : 0.2,
       radius     : 150,
       recenter   : true
@@ -61,8 +71,45 @@ let Ink = React.createClass({
     }
   },
 
-  tick(frame) {
-    this.setState({ frame })
+  tick() {
+    let { ctx, color, height, store, width } = this.state
+
+    let density = pixelRatio(ctx)
+
+    ctx.save()
+
+    ctx.scale(density, density)
+
+    ctx.clearRect(0, 0, width, height)
+    ctx.fillStyle = color
+    ctx.globalAlpha = store.getTotalOpacity()
+    ctx.fillRect(0, 0, width, height)
+
+    store.map(this.makeBlot, this)
+
+    ctx.restore()
+  },
+
+  makeBlot(blot) {
+    let { ctx, height, width } = this.state
+    let { x, y, radius } = blot
+
+    ctx.save()
+    ctx.globalAlpha = Equations.getBlotOpacity(blot)
+    ctx.beginPath()
+
+    if (this.props.recenter) {
+      let size = Math.max(height, width)
+
+      ctx.translate(Equations.getBlotShiftX(blot, size, width),
+                    Equations.getBlotShiftY(blot, size, height))
+    }
+
+    ctx.arc(x, y, radius * Equations.getBlotScale(blot), 0, TAU)
+
+    ctx.closePath()
+    ctx.fill()
+    ctx.restore()
   },
 
   componentWillUnmount() {
@@ -70,24 +117,28 @@ let Ink = React.createClass({
   },
 
   pushBlot(timeStamp, clientX, clientY) {
-    let { top, bottom, left, right }  = this.getDOMNode().getBoundingClientRect()
+    let el = this.getDOMNode()
+
+    let { top, bottom, left, right } = el.getBoundingClientRect()
 
     let height = bottom - top
     let width  = right - left
-    let size   = Math.max(height, width)
 
-    this.state.store.add({
-      duration   : this.props.duration,
-      maxOpacity : this.props.opacity,
-      mouseDown  : timeStamp,
-      mouseUp    : 0,
-      radius     : Math.min(size, this.props.radius),
-      recenter   : this.props.recenter,
-      x          : clientX - left,
-      y          : clientY - top,
-      size       : size,
-      height     : height,
-      width      : width
+    this.setState({
+      color  : el.style.color,
+      ctx    : this.state.ctx || this.refs.canvas.getDOMNode().getContext('2d'),
+      height : height,
+      width  : width
+    }, () => {
+      this.state.store.add({
+        duration  : this.props.duration,
+        opacity   : this.props.opacity,
+        mouseDown : timeStamp,
+        mouseUp   : 0,
+        radius    : Math.min(Math.max(width, height), this.props.radius),
+        x         : clientX - left,
+        y         : clientY - top
+      })
     })
   },
 
@@ -95,20 +146,17 @@ let Ink = React.createClass({
     this.state.store.release(time)
   },
 
-  makeBlot({ radius:r, opacity:fillOpacity, transform }, key) {
-    return React.createElement('circle', { key, r, fillOpacity, transform })
-  },
-
   render() {
-    let { background, fill, style } = this.props
-    let { store, touchEvents } = this.state
-    let css = { ...STYLE, ...style }
+    let { height, width, touchEvents } = this.state
 
     return (
-      <svg className="ink" style={ css } fill={ fill } { ...touchEvents } onDragOver={ this._onRelease }>
-        { store.map(this.makeBlot) }
-        <rect width="100%" height="100%" fillOpacity={ background ? this.state.store.getTotalOpacity() : 0 } />
-      </svg>
+        <canvas ref="canvas"
+                className="ink"
+                style={{ ...STYLE, ...this.props.style }}
+                height={ height * 2 }
+                width={ width * 2 }
+                onDragOver={ this._onRelease }
+                { ...touchEvents } />
     )
   },
 
