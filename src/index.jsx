@@ -72,7 +72,7 @@ let Ink = React.createClass({
   },
 
   tick() {
-    let { ctx, color, height, store, width } = this.state
+    let { ctx, color, height, width, store } = this.state
 
     let density = pixelRatio(ctx)
 
@@ -81,6 +81,7 @@ let Ink = React.createClass({
     ctx.scale(density, density)
 
     ctx.clearRect(0, 0, width, height)
+
     ctx.fillStyle = color
     ctx.globalAlpha = store.getTotalOpacity()
     ctx.fillRect(0, 0, width, height)
@@ -150,14 +151,16 @@ let Ink = React.createClass({
   render() {
     let { height, width, touchEvents } = this.state
 
+    let ratio = window.devicePixelRatio || 1
+
     return (
-        <canvas ref="canvas"
-                className="ink"
-                style={{ ...STYLE, ...this.props.style }}
-                height={ height * 2 }
-                width={ width * 2 }
-                onDragOver={ this._onRelease }
-                { ...touchEvents } />
+      <canvas ref="canvas"
+              className="ink"
+              style={{ ...STYLE, ...this.props.style }}
+              height={ height * ratio }
+              width={ width * ratio }
+              onDragOver={ this._onRelease }
+              { ...touchEvents } />
     )
   },
 
