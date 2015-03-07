@@ -25,20 +25,20 @@ let Component = React.createClass({
 })
 
 let component = React.render(<Component />, document.body)
-// let delta = Date.now()
+let delta = Date.now()
 
-// requestAnimationFrame(function click() {
-//   if (Date.now() - delta > 1000 / 12) {
-//     delta = Date.now()
-//     let dom = component.refs.background.getDOMNode()
+requestAnimationFrame(function click() {
+  if (Date.now() - delta > 1000 / 12) {
+    delta = Date.now()
+    let dom = component.refs.background.getDOMNode()
 
-//     Test.Simulate.mouseDown(dom, {
-//       button: 0,
-//       clientX: Math.random() * window.innerWidth,
-//       clientY: Math.random() * window.innerHeight
-//     })
+    Test.Simulate.mouseDown(dom, {
+      button: 0,
+      clientX: Math.random() * window.innerWidth,
+      clientY: Math.random() * window.innerHeight
+    })
 
-//     Test.Simulate.mouseUp(dom)
-//   }
-//   requestAnimationFrame(click)
-// })
+    Test.Simulate.mouseUp(dom)
+  }
+  requestAnimationFrame(click)
+})

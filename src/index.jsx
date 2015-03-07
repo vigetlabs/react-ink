@@ -132,8 +132,7 @@ let Ink = React.createClass({
     let { density, height, width, touchEvents } = this.state
 
     return (
-      <canvas ref="canvas"
-              className="ink"
+      <canvas className="ink"
               style={{ ...STYLE, ...this.props.style }}
               height={ height * density }
               width={ width * density }
