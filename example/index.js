@@ -28,7 +28,7 @@ let component = React.render(<Component />, document.body)
 let delta = Date.now()
 
 requestAnimationFrame(function click() {
-  if (Date.now() - delta > 100) {
+  if (Date.now() - delta > 1000 / 12) {
     delta = Date.now()
     let dom = component.refs.background.getDOMNode()
 

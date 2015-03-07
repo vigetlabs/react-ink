@@ -1,6 +1,6 @@
-let easing = require('./easing')
-let min    = Math.min
-let SQRT_2 = Math.sqrt(2)
+let easing       = require('./easing')
+let SQRT_2       = Math.sqrt(2)
+let { max, min } = Math
 
 function getPress(blot) {
   return min(blot.duration, Date.now() - blot.mouseDown)
@@ -19,12 +19,16 @@ function getRadius(blot) {
 
 module.exports = {
 
-  getBlotOpacity(blot) {
-    return easing(getRelease(blot), blot.opacity, -blot.opacity, blot.duration)
+  getMaxRadius(height, width, radius) {
+    return min(max(height, width), radius)
   },
 
-  getBlotOuterOpacity(blot) {
-    return min(this.getBlotOpacity(blot),
+  getBlotOpacity(blot, opacity) {
+    return easing(getRelease(blot), opacity, -opacity, blot.duration)
+  },
+
+  getBlotOuterOpacity(blot, opacity) {
+    return min(this.getBlotOpacity(blot, opacity),
                easing(getPress(blot), 0, 0.3, blot.duration * 3))
   },
 

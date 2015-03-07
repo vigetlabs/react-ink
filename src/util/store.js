@@ -1,20 +1,24 @@
 /**
- * @name Ink Store
- * @desc Keeps track of changes to ripple epicenters
+ * Ink Store
+ * Keeps track of changes to ripple epicenters
  * so that <Ink /> can focus on rendering them.
  */
 
 var Equations = require('./equations')
 
+let killStale = ({ mouseUp, duration }) => !mouseUp || (Date.now() - mouseUp) < duration
+
 module.exports = function(publicize) {
-  let _data = []
+  let _data    = []
   let _playing = false
   let _frame
 
   let Store = {
 
-    map(callback, scope) {
-      return _data.map(callback, scope)
+    each(callback, scope) {
+      for (var i = 0, l = _data.length; i < l; i++) {
+        callback.call(scope, _data[i])
+      }
     },
 
     play() {
@@ -29,30 +33,25 @@ module.exports = function(publicize) {
       cancelAnimationFrame(_frame)
     },
 
-    getTotalOpacity() {
-      return _data.reduce(function(memo, next) {
-        return memo + Equations.getBlotOuterOpacity(next)
-      }, 0)
+    getTotalOpacity(opacity) {
+      let answer = 0
+
+      for (var i = 0, l = _data.length; i < l; i++) {
+        answer += Equations.getBlotOuterOpacity(_data[i], opacity)
+      }
+
+      return answer
     },
 
     update() {
-      Store.prune()
-
-      publicize(_frame)
+      _data = _data.filter(killStale)
 
       if (_data.length) {
         _frame = requestAnimationFrame(Store.update)
+        publicize()
       } else {
         Store.stop()
       }
-    },
-
-    shouldPrune(blot) {
-      return Equations.getBlotOpacity(blot) > 0.01
-    },
-
-    prune() {
-      _data = _data.filter(this.shouldPrune)
     },
 
     add(props) {

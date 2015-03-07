@@ -1,6 +1,5 @@
 /**
  * Ink
- *
  * Fills a container with an SVG object that provides feedback on mouse/touch
  * events with a rippling pool.
  */
@@ -14,20 +13,11 @@ let Store      = require('./util/store')
 let Types      = React.PropTypes
 let TAU        = Math.PI * 2
 let Equations  = require('./util/equations')
+let Pure       = require('./util/pure')
 
 let Ink = React.createClass({
 
-  shouldComponentUpdate(props, state) {
-    for (let p in props) {
-      if (this.props[p] !== props[p]) return true
-    }
-
-    for (let s in state) {
-      if (this.state[s] !== state[s]) return true
-    }
-
-    return false
-  },
+  shouldComponentUpdate: Pure,
 
   propTypes: {
     background : Types.bool,
@@ -72,9 +62,7 @@ let Ink = React.createClass({
   },
 
   tick() {
-    let { ctx, color, height, width, store } = this.state
-
-    let density = pixelRatio(ctx)
+    let { ctx, color, density, height, width, store } = this.state
 
     ctx.save()
 
@@ -82,11 +70,12 @@ let Ink = React.createClass({
 
     ctx.clearRect(0, 0, width, height)
 
-    ctx.fillStyle = color
-    ctx.globalAlpha = store.getTotalOpacity()
+    ctx.fillStyle   = color
+    ctx.globalAlpha = store.getTotalOpacity(this.props.opacity)
+
     ctx.fillRect(0, 0, width, height)
 
-    store.map(this.makeBlot, this)
+    store.each(this.makeBlot, this)
 
     ctx.restore()
   },
@@ -95,22 +84,20 @@ let Ink = React.createClass({
     let { ctx, height, width } = this.state
     let { x, y, radius } = blot
 
-    ctx.save()
-    ctx.globalAlpha = Equations.getBlotOpacity(blot)
+    ctx.globalAlpha = Equations.getBlotOpacity(blot, this.props.opacity)
     ctx.beginPath()
 
     if (this.props.recenter) {
       let size = Math.max(height, width)
 
-      ctx.translate(Equations.getBlotShiftX(blot, size, width),
-                    Equations.getBlotShiftY(blot, size, height))
+      x += Equations.getBlotShiftX(blot, size, width)
+      y += Equations.getBlotShiftY(blot, size, height)
     }
 
     ctx.arc(x, y, radius * Equations.getBlotScale(blot), 0, TAU)
 
     ctx.closePath()
     ctx.fill()
-    ctx.restore()
   },
 
   componentWillUnmount() {
@@ -118,47 +105,38 @@ let Ink = React.createClass({
   },
 
   pushBlot(timeStamp, clientX, clientY) {
-    let el    = this.getDOMNode()
-    let style = window.getComputedStyle(el)
+    let el = this.getDOMNode()
 
     let { top, bottom, left, right } = el.getBoundingClientRect()
+    let { color }                    = window.getComputedStyle(el)
 
-    let height = bottom - top
-    let width  = right - left
+    let ctx     = this.state.ctx     || el.getContext('2d');
+    let density = this.state.density || pixelRatio(ctx)
+    let height  = bottom - top
+    let width   = right - left
+    let radius  = Equations.getMaxRadius(height, width, this.props.radius)
 
-    this.setState({
-      color  : style.color,
-      ctx    : this.state.ctx || this.refs.canvas.getDOMNode().getContext('2d'),
-      height : height,
-      width  : width
-    }, () => {
+    this.setState({ color, ctx, density, height, width }, () => {
       this.state.store.add({
         duration  : this.props.duration,
-        opacity   : this.props.opacity,
         mouseDown : timeStamp,
         mouseUp   : 0,
-        radius    : Math.min(Math.max(width, height), this.props.radius),
+        radius    : radius,
         x         : clientX - left,
         y         : clientY - top
       })
     })
   },
 
-  popBlot(time) {
-    this.state.store.release(time)
-  },
-
   render() {
-    let { height, width, touchEvents } = this.state
-
-    let ratio = global.devicePixelRatio || 1
+    let { density, height, width, touchEvents } = this.state
 
     return (
       <canvas ref="canvas"
               className="ink"
               style={{ ...STYLE, ...this.props.style }}
-              height={ height * ratio }
-              width={ width * ratio }
+              height={ height * density }
+              width={ width * density }
               onDragOver={ this._onRelease }
               { ...touchEvents } />
     )
@@ -179,7 +157,7 @@ let Ink = React.createClass({
   },
 
   _onRelease() {
-    this.popBlot(Date.now())
+    this.state.store.release(Date.now())
   }
 })
 
