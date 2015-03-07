@@ -1,7 +1,9 @@
 [![NPM](https://nodei.co/npm/react-ink.png?compact=true)](https://npmjs.org/package/react-ink)
 
 ---
+
 [![Build Status](https://travis-ci.org/vigetlabs/react-ink.png?branch=master)](https://travis-ci.org/vigetlabs/react-ink)
+
 ---
 
 Add the Material Design ripple effect to React component.
