@@ -39,8 +39,12 @@ let Ink = React.createClass({
 
   getInitialState() {
     return {
+      color       : 'transparent',
+      density     : 1,
+      height      : 0,
       store       : Store(this.tick),
-      touchEvents : this.touchEvents()
+      touchEvents : this.touchEvents(),
+      width       : 0
     }
   },
 
@@ -112,8 +116,8 @@ let Ink = React.createClass({
     let { top, bottom, left, right } = el.getBoundingClientRect()
     let { color }                    = window.getComputedStyle(el)
 
-    let ctx     = this.state.ctx     || el.getContext('2d');
-    let density = this.state.density || pixelRatio(ctx)
+    let ctx     = this.state.ctx || el.getContext('2d');
+    let density = pixelRatio(ctx)
     let height  = bottom - top
     let width   = right - left
     let radius  = Equations.getMaxRadius(height, width, this.props.radius)

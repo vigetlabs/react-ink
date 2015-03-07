@@ -3,6 +3,8 @@ import Ink   from '../src/index'
 
 let Test = React.addons.TestUtils
 
+React.initializeTouchEvents(true)
+
 let Component = React.createClass({
 
   render() {
