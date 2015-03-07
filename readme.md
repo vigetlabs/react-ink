@@ -1,12 +1,16 @@
-# React Ink
+[![NPM](https://nodei.co/npm/react-ink.png?compact=true)](https://npmjs.org/package/react-ink)
 
+---
 [![Build Status](https://travis-ci.org/vigetlabs/react-ink.png?branch=master)](https://travis-ci.org/vigetlabs/react-ink)
+---
 
-Add ink to any react component.
+Add the Material Design ripple effect to React component.
 
 ![Ink Gif](http://cl.ly/image/1r36102z0M3r/ink.gif)
 
 ## Usage
+
+Ink must be placed within another component with a position is not `static`:
 
 ```js
 var React = require('react');
@@ -15,9 +19,9 @@ var Ink = require('react-ink');
 module.exports = React.createClass({
   render() {
     return (
-      <div>
+      <button style={{ position: "relative" }}>
         <Ink />
-      </div>
+      </button>
     );
   }
 });
@@ -31,9 +35,8 @@ There are several options available for how `<Ink />` renders, see the [`getDefa
 ```javascript
 {
   background : true,           // When true, pressing the ink will cause the background to fill with the current color
-  fill       : 'currentColor',
-  duration   : 1500,           // Duration of the full animation completion
-  opacity    : 0.2,            // The opacity of the ink blob
+  duration   : 1000,           // Duration of the full animation completion
+  opacity    : 0.25,           // The opacity of the ink blob
   radius     : 150,            // The size of the effect, will not exceed bounds of containing element
   recenter   : true,           // When true, recenter will pull ink towards the center of the containing element
   style      : {...}           // See src/style.js. Any rules set here will extend these values

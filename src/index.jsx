@@ -70,10 +70,12 @@ let Ink = React.createClass({
 
     ctx.clearRect(0, 0, width, height)
 
-    ctx.fillStyle   = color
-    ctx.globalAlpha = store.getTotalOpacity(this.props.opacity)
+    ctx.fillStyle = color
 
-    ctx.fillRect(0, 0, width, height)
+    if (this.props.background) {
+      ctx.globalAlpha = store.getTotalOpacity(this.props.opacity)
+      ctx.fillRect(0, 0, width, height)
+    }
 
     store.each(this.makeBlot, this)
 
