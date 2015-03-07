@@ -30,8 +30,8 @@ let Ink = React.createClass({
   getDefaultProps() {
     return {
       background : true,
-      duration   : 1500,
-      opacity    : 0.2,
+      duration   : 1000,
+      opacity    : 0.25,
       radius     : 150,
       recenter   : true
     }
