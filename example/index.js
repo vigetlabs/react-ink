@@ -11,7 +11,7 @@ let Component = React.createClass({
         <h1>Click anywhere!</h1>
         <Ink ref="background" />
         <button style={{ position: 'relative' }} onClick={ this._onClick }>
-          Buttons Too!
+          Toggle Stress Test
           <Ink key="__ink" />
         </button>
       </div>
@@ -19,26 +19,37 @@ let Component = React.createClass({
   },
 
   _onClick() {
-    console.log('success')
+    toggle()
   }
 
 })
 
+let playing = false
 let component = React.render(<Component />, document.body)
 let delta = Date.now()
+let frame = null
 
-requestAnimationFrame(function click() {
-  if (Date.now() - delta > 1000 / 12) {
-    delta = Date.now()
-    let dom = component.refs.background.getDOMNode()
+function toggle() {
+  if (playing) {
+    cancelAnimationFrame(frame)
+    playing = false
+  } else {
+    playing = true
 
-    Test.Simulate.mouseDown(dom, {
-      button: 0,
-      clientX: Math.random() * window.innerWidth,
-      clientY: Math.random() * window.innerHeight
+    requestAnimationFrame(function click() {
+      if (Date.now() - delta > 1000 / 12) {
+        delta = Date.now()
+        let dom = component.refs.background.getDOMNode()
+
+        Test.Simulate.mouseDown(dom, {
+          button: 0,
+          clientX: Math.random() * window.innerWidth,
+          clientY: Math.random() * window.innerHeight
+        })
+
+        Test.Simulate.mouseUp(dom)
+      }
+      frame = requestAnimationFrame(click)
     })
-
-    Test.Simulate.mouseUp(dom)
   }
-  requestAnimationFrame(click)
-})
+}
