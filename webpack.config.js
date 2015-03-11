@@ -22,15 +22,16 @@ module.exports = {
   module: {
     preLoaders: [
       {
-        test    : /\.jsx*$/,
-        loader  : 'transform?envify'
+        test   : /\.jsx*$/,
+        loader : 'transform?envify'
       }
     ],
+
     loaders: [
       {
         test    : /\.jsx*$/,
         exclude : /node_modules/,
-        loader  : '6to5?experimental'
+        loader  : 'babel-loader?experimental'
       },
       {
         test    : /\.json$/,
