@@ -6,14 +6,14 @@
 
 var Equations = require('./equations')
 
-let killStale = ({ mouseUp, duration }) => !mouseUp || (Date.now() - mouseUp) < duration
+const killStale = ({ mouseUp, duration }) => !mouseUp || (Date.now() - mouseUp) < duration
 
 module.exports = function(publicize) {
   let _data    = []
   let _playing = false
   let _frame
 
-  let Store = {
+  const Store = {
 
     each(callback, scope) {
       for (var i = 0, l = _data.length; i < l; i++) {

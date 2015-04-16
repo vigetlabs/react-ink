@@ -4,18 +4,18 @@
  * events with a rippling pool.
  */
 
-let HAS_TOUCH  = require('./util/hasTouch')
-let MOUSE_LEFT = 0
-let pixelRatio = require('./util/pixelRatio')
-let React      = require('react')
-let STYLE      = require('./style')
-let Store      = require('./util/store')
-let Types      = React.PropTypes
-let TAU        = Math.PI * 2
-let Equations  = require('./util/equations')
-let Pure       = require('./util/pure')
+const HAS_TOUCH  = require('./util/hasTouch')
+const MOUSE_LEFT = 0
+const pixelRatio = require('./util/pixelRatio')
+const React      = require('react')
+const STYLE      = require('./style')
+const Store      = require('./util/store')
+const Types      = React.PropTypes
+const TAU        = Math.PI * 2
+const Equations  = require('./util/equations')
+const Pure       = require('./util/pure')
 
-let Ink = React.createClass({
+const Ink = React.createClass({
 
   shouldComponentUpdate: Pure,
 
@@ -66,7 +66,7 @@ let Ink = React.createClass({
   },
 
   tick() {
-    let { ctx, color, density, height, width, store } = this.state
+    const { ctx, color, density, height, width, store } = this.state
 
     ctx.save()
 
@@ -87,14 +87,14 @@ let Ink = React.createClass({
   },
 
   makeBlot(blot) {
-    let { ctx, height, width } = this.state
+    const { ctx, height, width } = this.state
     let { x, y, radius } = blot
 
     ctx.globalAlpha = Equations.getBlotOpacity(blot, this.props.opacity)
     ctx.beginPath()
 
     if (this.props.recenter) {
-      let size = Math.max(height, width)
+      const size = Math.max(height, width)
 
       x += Equations.getBlotShiftX(blot, size, width)
       y += Equations.getBlotShiftY(blot, size, height)
@@ -111,16 +111,16 @@ let Ink = React.createClass({
   },
 
   pushBlot(timeStamp, clientX, clientY) {
-    let el = this.getDOMNode()
+    const el = this.getDOMNode()
 
-    let { top, bottom, left, right } = el.getBoundingClientRect()
-    let { color }                    = window.getComputedStyle(el)
+    const { top, bottom, left, right } = el.getBoundingClientRect()
+    const { color }                    = window.getComputedStyle(el)
 
-    let ctx     = this.state.ctx || el.getContext('2d');
-    let density = pixelRatio(ctx)
-    let height  = bottom - top
-    let width   = right - left
-    let radius  = Equations.getMaxRadius(height, width, this.props.radius)
+    const ctx     = this.state.ctx || el.getContext('2d');
+    const density = pixelRatio(ctx)
+    const height  = bottom - top
+    const width   = right - left
+    const radius  = Equations.getMaxRadius(height, width, this.props.radius)
 
     this.setState({ color, ctx, density, height, width }, () => {
       this.state.store.add({
@@ -135,7 +135,7 @@ let Ink = React.createClass({
   },
 
   render() {
-    let { density, height, width, touchEvents } = this.state
+    const { density, height, width, touchEvents } = this.state
 
     return (
       <canvas className="ink"
@@ -148,12 +148,12 @@ let Ink = React.createClass({
   },
 
   _onPress(e) {
-    let { button, ctrlKey, clientX, clientY, changedTouches } = e
-    let timeStamp = Date.now()
+    const { button, ctrlKey, clientX, clientY, changedTouches } = e
+    const timeStamp = Date.now()
 
     if (changedTouches) {
       for (var i = 0; i < changedTouches.length; i++) {
-        let { clientX, clientY } = changedTouches[i]
+        const { clientX, clientY } = changedTouches[i]
         this.pushBlot(timeStamp, clientX, clientY)
       }
     } else if (button === MOUSE_LEFT && !ctrlKey) {
