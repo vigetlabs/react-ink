@@ -138,13 +138,23 @@ const Ink = React.createClass({
     const { density, height, width, touchEvents } = this.state
 
     return (
-      <canvas className="ink"
+      <canvas className={this.props.className || "ink"}
               style={{ ...STYLE, ...this.props.style }}
               height={ height * density }
               width={ width * density }
               onDragOver={ this._onRelease }
+              { ...this._filterProps()}
               { ...touchEvents } />
     )
+  },
+
+  _filterProps () {
+    return Object.keys(this.props).reduce((filtered, key) => {
+      if (key !== 'style' && key !== 'className' && key !== 'onDragOver') {
+        filtered[key] = this.props[key]
+      }
+      return filtered
+    }, {})
   },
 
   _onPress(e) {
