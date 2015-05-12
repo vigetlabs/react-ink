@@ -2,5 +2,5 @@
 
 example/example.build.js
 example/example.build.js.map
-
+dist
 node_modules
