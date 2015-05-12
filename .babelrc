@@ -1,0 +1,11 @@
+{
+  "stage": 1,
+  "loose": true,
+  "optional"  : [
+    "minification.propertyLiterals",
+    "minification.memberExpressionLiterals",
+    "utility.inlineEnvironmentVariables",
+    "utility.inlineExpressions"
+  ],
+  "blacklist" : [ "strict" ]
+}

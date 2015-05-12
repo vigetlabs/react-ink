@@ -1,12 +1,11 @@
 {
   "name": "react-ink",
-  "version": "4.0.0-rc5",
+  "version": "4.0.0",
   "description": "A React component for adding material design style ink.",
   "main": "dist/ink.js",
   "scripts": {
     "start": "webpack-dev-server --config=webpack.example.config.js",
-    "prepublish": "webpack -pcmv && echo `gzip -c dist/ink.js | wc -c`",
-    "test": "jest"
+    "prepublish": "webpack -p && echo `gzip -c dist/ink.js | wc -c`"
   },
   "repository": {
     "type": "git",
@@ -16,30 +15,16 @@
     "react",
     "material design"
   ],
-  "jest": {
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react"
-    ],
-    "globals": {
-      "__DEV__": true
-    }
-  },
   "author": "Nate Hunzaker",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^4.7.8",
-    "babel-jest": "^4.0.0",
-    "babel-loader": "^4.1.0",
-    "envify": "^3.3.0",
-    "jest-cli": "^0.4.0",
-    "react": "^0.13.0",
-    "react-tools": "^0.13.0",
-    "transform-loader": "^0.2.1",
-    "webpack": "^1.7.2",
-    "webpack-dev-server": "^1.7.0"
+    "babel-core": "~5",
+    "babel-loader": "~5",
+    "react": "~0.13",
+    "webpack": "~1",
+    "webpack-dev-server": "~1"
   },
   "peerDependencies": {
-    "react": ">= 0.13.x"
+    "react": ">= 0.12 < 0.14"
   }
 }

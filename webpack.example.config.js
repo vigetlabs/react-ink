@@ -1,6 +1,3 @@
-var Path    = require('path')
-var WebPack = require('webpack')
-
 module.exports = {
   entry: './example/index.js',
   devtool: 'source-map',
@@ -12,8 +9,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
-    modulesDirectories: [ 'web_modules', 'node_modules' ]
+    extensions: ['', '.js', '.jsx']
   },
 
   module: {
@@ -21,11 +17,7 @@ module.exports = {
       {
         test    : /\.jsx*$/,
         exclude : /node_modules/,
-        loader  : 'babel-loader?experimental'
-      },
-      {
-        test    : /\.json$/,
-        loader  : 'json-loader'
+        loader  : 'babel'
       }
     ]
   }

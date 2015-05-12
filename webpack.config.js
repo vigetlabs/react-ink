@@ -11,32 +11,18 @@ module.exports = {
   },
 
   externals: {
-    'react': 'react'
+    react: 'react'
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
-    modulesDirectories: [ 'web_modules', 'node_modules' ]
+    extensions: ['', '.js', '.jsx']
   },
 
   module: {
-    preLoaders: [
-      {
-        test   : /\.jsx*$/,
-        loader : 'transform?envify'
-      }
-    ],
-
-    loaders: [
-      {
-        test    : /\.jsx*$/,
-        exclude : /node_modules/,
-        loader  : 'babel-loader?experimental'
-      },
-      {
-        test    : /\.json$/,
-        loader  : 'json-loader'
-      }
-    ]
+    loaders: [{
+      test    : /\.jsx*$/,
+      exclude : /node_modules/,
+      loader  : 'babel'
+    }]
   }
 }
