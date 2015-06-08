@@ -33,7 +33,8 @@ let Ink = React.createClass({
       duration   : 1000,
       opacity    : 0.25,
       radius     : 150,
-      recenter   : true
+      recenter   : true,
+      hasTouch   : HAS_TOUCH
     }
   },
 
@@ -49,7 +50,7 @@ let Ink = React.createClass({
   },
 
   touchEvents() {
-    if (HAS_TOUCH) {
+    if (this.props.hasTouch) {
       return {
         onTouchStart  : this._onPress,
         onTouchEnd    : this._onRelease,
