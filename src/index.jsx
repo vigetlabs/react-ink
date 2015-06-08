@@ -24,7 +24,8 @@ let Ink = React.createClass({
     duration   : Types.number,
     opacity    : Types.number,
     radius     : Types.number,
-    recenter   : Types.bool
+    recenter   : Types.bool,
+    hasTouch   : Types.bool
   },
 
   getDefaultProps() {
