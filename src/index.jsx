@@ -8,6 +8,7 @@ let HAS_TOUCH  = require('./util/hasTouch')
 let MOUSE_LEFT = 0
 let pixelRatio = require('./util/pixelRatio')
 let React      = require('react')
+let ReactDOM   = require('react-dom')
 let STYLE      = require('./style')
 let Store      = require('./util/store')
 let Types      = React.PropTypes
@@ -113,7 +114,7 @@ let Ink = React.createClass({
   },
 
   pushBlot(timeStamp, clientX, clientY) {
-    let el = this.getDOMNode()
+    let el = ReactDOM.findDOMNode(this)
 
     let { top, bottom, left, right } = el.getBoundingClientRect()
     let { color }                    = window.getComputedStyle(el)
