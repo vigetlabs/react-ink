@@ -3,3 +3,4 @@
 example/example.build.js
 example/example.build.js.map
 node_modules
+dist
