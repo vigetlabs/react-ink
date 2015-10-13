@@ -1,9 +1,7 @@
-import React from 'react/addons'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import Ink   from '../src/index'
-
-let Test = React.addons.TestUtils
-
-React.initializeTouchEvents(true)
+import Test  from 'react-addons-test-utils'
 
 let Component = React.createClass({
 
@@ -27,7 +25,7 @@ let Component = React.createClass({
 })
 
 let playing = false
-let component = React.render(<Component />, document.body)
+let component = ReactDOM.render(<Component />, document.getElementById('app'))
 let delta = Date.now()
 let frame = null
 
@@ -41,7 +39,7 @@ function toggle() {
     requestAnimationFrame(function click() {
       if (Date.now() - delta > 1000 / 12) {
         delta = Date.now()
-        let dom = component.refs.background.getDOMNode()
+        let dom = ReactDOM.findDOMNode(component.refs.background)
 
         Test.Simulate.mouseDown(dom, {
           button: 0,
