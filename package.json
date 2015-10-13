@@ -32,6 +32,6 @@
     "webpack-dev-server": "~1"
   },
   "peerDependencies": {
-    "react": ">= 0.13"
+    "react": ">= 0.12"
   }
 }
