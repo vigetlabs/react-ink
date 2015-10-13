@@ -115,6 +115,11 @@ let Ink = React.createClass({
   pushBlot(timeStamp, clientX, clientY) {
     let el = this.refs.canvas
 
+    // 0.13 support
+    if (el instanceof window.HTMLCanvasElement === false) {
+      el = el.getDOMNode()
+    }
+
     let { top, bottom, left, right } = el.getBoundingClientRect()
     let { color }                    = window.getComputedStyle(el)
 
