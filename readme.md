@@ -12,7 +12,7 @@ Add the Material Design ripple effect to React component.
 
 ## Usage
 
-Ink must be placed within another component with a position is not `static`:
+Ink must be placed within another component with a position is not `static` (so `relative`, `fixed`, or `absolute`).
 
 ```js
 var React = require('react');
