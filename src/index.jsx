@@ -128,7 +128,7 @@ let Ink = React.createClass({
     let height  = bottom - top
     let width   = right - left
 		let radius = this.props.radius;
-		if (this.props.radius === this.getDefaultProps().radius)
+		if (this.props.radius === Ink.getDefaultProps().radius)
 			radius = Equations.getMaxRadius(height, width, this.props.radius)
 
     this.setState({ color, ctx, density, height, width }, () => {

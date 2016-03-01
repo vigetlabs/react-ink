@@ -200,7 +200,7 @@ module.exports =
 	    var height = bottom - top;
 	    var width = right - left;
 	    var radius = this.props.radius;
-	    if (this.props.radius === this.getDefaultProps().radius) radius = Equations.getMaxRadius(height, width, this.props.radius);
+	    if (this.props.radius === Ink.getDefaultProps().radius) radius = Equations.getMaxRadius(height, width, this.props.radius);
 
 	    this.setState({ color: color, ctx: ctx, density: density, height: height, width: width }, function () {
 	      _this.state.store.add({
