@@ -25,12 +25,14 @@ let Ink = React.createClass({
     opacity    : Types.number,
     radius     : Types.number,
     recenter   : Types.bool,
-    hasTouch   : Types.bool
+    hasTouch   : Types.bool,
+		color      : Types.string,
   },
 
   getDefaultProps() {
     return {
       background : true,
+			color      : '#FFFFFF',
       duration   : 1000,
       opacity    : 0.25,
       radius     : 150,
@@ -41,7 +43,6 @@ let Ink = React.createClass({
 
   getInitialState() {
     return {
-      color       : 'transparent',
       density     : 1,
       height      : 0,
       store       : Store(this.tick),
@@ -68,7 +69,7 @@ let Ink = React.createClass({
   },
 
   tick() {
-    let { ctx, color, density, height, width, store } = this.state
+    let { ctx, density, height, width, store } = this.state
 
     ctx.save()
 
@@ -76,7 +77,7 @@ let Ink = React.createClass({
 
     ctx.clearRect(0, 0, width, height)
 
-    ctx.fillStyle = color
+    ctx.fillStyle = this.props.color 
 
     if (this.props.background) {
       ctx.globalAlpha = store.getTotalOpacity(this.props.opacity)
@@ -121,7 +122,6 @@ let Ink = React.createClass({
     }
 
     let { top, bottom, left, right } = el.getBoundingClientRect()
-    //let { color }                    = '#FFFFFF'; //window.getComputedStyle(el)
 
     let ctx     = this.state.ctx || el.getContext('2d');
     let density = pixelRatio(ctx)
