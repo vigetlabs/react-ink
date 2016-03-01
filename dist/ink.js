@@ -191,9 +191,8 @@ module.exports =
 	    var bottom = _el$getBoundingClientRect.bottom;
 	    var left = _el$getBoundingClientRect.left;
 	    var right = _el$getBoundingClientRect.right;
-	    var _FFFFFF = '#FFFFFF';
-	    var color = _FFFFFF.color;
-	    //window.getComputedStyle(el)
+
+	    //let { color }                    = '#FFFFFF'; //window.getComputedStyle(el)
 
 	    var ctx = this.state.ctx || el.getContext('2d');
 	    var density = pixelRatio(ctx);
@@ -202,7 +201,7 @@ module.exports =
 	    var radius = this.props.radius;
 	    if (this.props.radius === Ink.getDefaultProps().radius) radius = Equations.getMaxRadius(height, width, this.props.radius);
 
-	    this.setState({ color: color, ctx: ctx, density: density, height: height, width: width }, function () {
+	    this.setState({ ctx: ctx, density: density, height: height, width: width }, function () {
 	      _this.state.store.add({
 	        duration: _this.props.duration,
 	        mouseDown: timeStamp,
