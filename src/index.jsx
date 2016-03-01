@@ -121,13 +121,15 @@ let Ink = React.createClass({
     }
 
     let { top, bottom, left, right } = el.getBoundingClientRect()
-    let { color }                    = window.getComputedStyle(el)
+    let { color }                    = '#FFFFFF'; //window.getComputedStyle(el)
 
     let ctx     = this.state.ctx || el.getContext('2d');
     let density = pixelRatio(ctx)
     let height  = bottom - top
     let width   = right - left
-    let radius  = Equations.getMaxRadius(height, width, this.props.radius)
+		let radius = this.props.radius;
+		if (this.props.radius === this.getDefaultProps().radius)
+			radius = Equations.getMaxRadius(height, width, this.props.radius)
 
     this.setState({ color, ctx, density, height, width }, () => {
       this.state.store.add({
