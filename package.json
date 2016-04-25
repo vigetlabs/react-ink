@@ -15,19 +15,14 @@
     "react",
     "material design"
   ],
-  "babel": {
-    "stage": 2,
-    "loose": "all",
-    "optional": []
-  },
+
   "author": "Nate Hunzaker",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "~5",
     "babel-loader": "~5",
-    "react": "~0.14.0",
-    "react-addons-test-utils": "0.14.0",
-    "react-dom": "~0.14.0",
+    "react": "~15.0.1",
+    "react-dom": "~15.0.1",
     "webpack": "~1",
     "webpack-dev-server": "~1"
   },

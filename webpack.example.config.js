@@ -1,3 +1,5 @@
+var base = require('./config')
+
 module.exports = {
   entry: './example/index.js',
   devtool: 'source-map',
@@ -8,17 +10,6 @@ module.exports = {
     filename: 'example.build.js'
   },
 
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  },
-
-  module: {
-    loaders: [
-      {
-        test    : /\.jsx*$/,
-        exclude : /node_modules/,
-        loader  : 'babel'
-      }
-    ]
-  }
+  resolve : base.resolve,
+  module  : base.module
 }

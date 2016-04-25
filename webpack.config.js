@@ -1,8 +1,9 @@
 var Path = require('path')
-var WebPack = require('webpack')
 
 module.exports = {
   entry: './src/index.jsx',
+
+  devtool: 'source-map',
 
   output: {
     libraryTarget: 'commonjs2',
@@ -22,7 +23,30 @@ module.exports = {
     loaders: [{
       test    : /\.jsx*$/,
       exclude : /node_modules/,
-      loader  : 'babel'
+      loader  : 'babel',
+      query   : {
+        stage : 2,
+        loose : "all"
+      },
     }]
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
