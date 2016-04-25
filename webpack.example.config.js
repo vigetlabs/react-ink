@@ -1,4 +1,4 @@
-var base = require('./config')
+var base = require('./webpack.config')
 
 module.exports = {
   entry: './example/index.js',
