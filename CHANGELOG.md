@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v5.1.0
+
+- Moved babel compilation configuration from package.json into webpack
+  config to avoid cross-project babel compilation issues
+
 ## v5.0.2
 
 - Lower minimum peerDependency to 0.12. Turns it that we can support
