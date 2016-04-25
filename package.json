@@ -1,6 +1,6 @@
 {
   "name": "react-ink",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "A React component for adding material design style ink.",
   "main": "dist/ink.js",
   "scripts": {
@@ -15,7 +15,6 @@
     "react",
     "material design"
   ],
-
   "author": "Nate Hunzaker",
   "license": "MIT",
   "devDependencies": {
