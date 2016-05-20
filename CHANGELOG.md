@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v5.1.1
+
+- Use inline source-map to avoid warnings with including external map.
+
 ## v5.1.0
 
 - Moved babel compilation configuration from package.json into webpack

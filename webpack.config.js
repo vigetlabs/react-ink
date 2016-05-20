@@ -3,7 +3,7 @@ var Path = require('path')
 module.exports = {
   entry: './src/index.jsx',
 
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
 
   output: {
     libraryTarget: 'commonjs2',
@@ -31,22 +31,3 @@ module.exports = {
     }]
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
