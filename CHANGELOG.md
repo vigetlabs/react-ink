@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v6.0.0
+
+- Remove React as a peer dependency
+- Remove onTouchLeave event, which is no longer supported
+- Upgrade Babel to Babel 6
+
 ## v5.1.1
 
 - Use inline source-map to avoid warnings with including external map.
