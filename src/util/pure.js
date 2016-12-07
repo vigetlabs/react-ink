@@ -1,4 +1,4 @@
-export default function Pure (props, state) {
+module.exports = function Pure (props, state) {
   for (let p in props) {
     if (this.props[p] !== props[p]) return true
   }

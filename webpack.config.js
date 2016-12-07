@@ -1,7 +1,7 @@
 var Path = require('path')
 
 module.exports = {
-  entry: './src/index.jsx',
+  entry: './src/index.js',
 
   devtool: 'inline-source-map',
 
@@ -23,11 +23,7 @@ module.exports = {
     loaders: [{
       test    : /\.jsx*$/,
       exclude : /node_modules/,
-      loader  : 'babel',
-      query   : {
-        stage : 2,
-        loose : "all"
-      },
+      loader  : 'babel'
     }]
   }
 }

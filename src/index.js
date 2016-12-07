@@ -55,8 +55,7 @@ let Ink = React.createClass({
       return {
         onTouchStart  : this._onPress,
         onTouchEnd    : this._onRelease,
-        onTouchCancel : this._onRelease,
-        onTouchLeave  : this._onRelease
+        onTouchCancel : this._onRelease
       }
     } else {
       return {
