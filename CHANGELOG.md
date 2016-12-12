@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v6.0.1
+
+- Removed some dependencies that should not have been included in production
+
 ## v6.0.0
 
 - Remove React as a peer dependency
