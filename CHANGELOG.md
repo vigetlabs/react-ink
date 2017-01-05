@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v6.1.0
+
+- Add TypeScript definitions
+
 ## v6.0.1
 
 - Removed some dependencies that should not have been included in production
