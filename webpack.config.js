@@ -1,29 +1,44 @@
-var Path = require('path')
+var base = require('./webpack.config')
+var path = require('path')
 
-module.exports = {
-  entry: './src/index.js',
+module.exports = function (env) {
+  let isExample = env === 'example'
 
-  devtool: 'inline-source-map',
+  var config = {
 
-  output: {
-    libraryTarget: 'commonjs2',
-    path: Path.resolve(__dirname, 'dist'),
-    filename: 'ink.js'
-  },
+    entry: {
+      ink: isExample ? './example/index.js' : './src/index.js'
+    },
 
-  externals: {
-    react: 'react'
-  },
+    devtool: 'inline-source-map',
 
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  },
+    output: {
+      path: path.resolve(isExample ? './example' : './dist'),
+      filename: '[name].js'
+    },
 
-  module: {
-    loaders: [{
-      test    : /\.jsx*$/,
-      exclude : /node_modules/,
-      loader  : 'babel'
-    }]
+    module: {
+      rules: [{
+        test    : /\.jsx*$/,
+        exclude : /node_modules/,
+        loader  : 'babel-loader'
+      }]
+    },
+
+    devServer: {
+      contentBase: path.resolve('./example'),
+      publicPath: '/',
+      quiet: true
+    }
   }
+
+  if (isExample === false) {
+    config.output.libraryTarget = 'commonjs2'
+
+    config.externals = {
+      react: 'react'
+    }
+  }
+
+  return config
 }
