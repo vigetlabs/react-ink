@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 6.1.1
+
+- Fix case where ink would hang when switching windows. [Thanks @hhaidar](https://github.com/vigetlabs/react-ink/pull/30)
+
 ## v6.1.0
 
 - Add TypeScript definitions
