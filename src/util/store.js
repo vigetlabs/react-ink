@@ -48,10 +48,11 @@ module.exports = function(publicize) {
 
       if (_data.length) {
         _frame = requestAnimationFrame(Store.update)
-        publicize()
       } else {
         Store.stop()
       }
+
+      publicize()
     },
 
     add(props) {
