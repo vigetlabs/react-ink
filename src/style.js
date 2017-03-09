@@ -1,8 +1,8 @@
 module.exports = {
-  borderRadius: "inherit",
-  height: "100%",
+  borderRadius: 'inherit',
+  height: '100%',
   left: 0,
-  position: "absolute",
+  position: 'absolute',
   top: 0,
-  width: "100%"
+  width: '100%'
 }

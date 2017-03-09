@@ -1,5 +1,6 @@
 # React Ink
 
+[![CircleCI](https://img.shields.io/circleci/project/vigetlabs/react-ink.svg?maxAge=2592000)](https://circleci.com/gh/vigetlabs/react-ink)
 [![npm](https://img.shields.io/npm/v/react-ink.svg?maxAge=2592000)](https://www.npmjs.com/package/react-ink)
 [![npm](https://img.shields.io/npm/dm/react-ink.svg?maxAge=2592000)](https://www.npmjs.com/package/react-ink)
 

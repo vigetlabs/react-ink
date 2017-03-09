@@ -122,7 +122,7 @@ let Ink = React.createClass({
     let { top, bottom, left, right } = el.getBoundingClientRect()
     let { color } = window.getComputedStyle(el)
 
-    let ctx     = this.state.ctx || el.getContext('2d');
+    let ctx     = this.state.ctx || el.getContext('2d')
     let density = pixelRatio(ctx)
     let height  = bottom - top
     let width   = right - left
