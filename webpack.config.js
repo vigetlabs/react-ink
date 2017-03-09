@@ -1,3 +1,5 @@
+'use strict'
+
 const base = require('./webpack.config')
 const path = require('path')
 
