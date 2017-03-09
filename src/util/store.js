@@ -29,7 +29,7 @@ module.exports = function(publicize) {
     },
 
     stop() {
-      _playing = false;
+      _playing = false
       cancelAnimationFrame(_frame)
     },
 
