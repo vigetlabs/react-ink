@@ -1,28 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Ink   from '../src/index'
-import Test  from 'react-addons-test-utils'
+import Test  from 'react-dom/test-utils'
 
-let Component = React.createClass({
+class Component extends React.Component {
 
   render() {
     return (
       <div>
         <h1>Click anywhere!</h1>
         <Ink ref="background" />
-        <button style={{ position: 'relative' }} onClick={ this._onClick }>
+        <button style={{ position: 'relative' }} onClick={toggle}>
           Toggle Stress Test
           <Ink key="__ink" />
         </button>
       </div>
     )
-  },
-
-  _onClick() {
-    toggle()
   }
 
-})
+}
 
 let playing = false
 let component = ReactDOM.render(<Component />, document.getElementById('app'))

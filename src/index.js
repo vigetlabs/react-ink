@@ -10,37 +10,24 @@ let pixelRatio = require('./util/pixelRatio')
 let React      = require('react')
 let STYLE      = require('./style')
 let Store      = require('./util/store')
-let Types      = React.PropTypes
 let TAU        = Math.PI * 2
 let Equations  = require('./util/equations')
-let Pure       = require('./util/pure')
 
-let Ink = React.createClass({
+class Ink extends React.PureComponent {
 
-  shouldComponentUpdate: Pure,
+  static defaultProps = {
+    background : true,
+    duration   : 1000,
+    opacity    : 0.25,
+    radius     : 150,
+    recenter   : true,
+    hasTouch   : HAS_TOUCH
+  }
 
-  propTypes: {
-    background : Types.bool,
-    duration   : Types.number,
-    opacity    : Types.number,
-    radius     : Types.number,
-    recenter   : Types.bool,
-    hasTouch   : Types.bool
-  },
+  constructor (props) {
+    super(...arguments)
 
-  getDefaultProps() {
-    return {
-      background : true,
-      duration   : 1000,
-      opacity    : 0.25,
-      radius     : 150,
-      recenter   : true,
-      hasTouch   : HAS_TOUCH
-    }
-  },
-
-  getInitialState() {
-    return {
+    this.state = {
       color       : 'transparent',
       density     : 1,
       height      : 0,
@@ -48,9 +35,9 @@ let Ink = React.createClass({
       touchEvents : this.touchEvents(),
       width       : 0
     }
-  },
+  }
 
-  touchEvents() {
+  touchEvents () {
     if (this.props.hasTouch) {
       return {
         onTouchStart  : this._onPress,
@@ -64,9 +51,9 @@ let Ink = React.createClass({
         onMouseLeave  : this._onRelease
       }
     }
-  },
+  }
 
-  tick() {
+  tick = () => {
     let { ctx, color, density, height, width, store } = this.state
 
     ctx.save()
@@ -85,9 +72,9 @@ let Ink = React.createClass({
     store.each(this.makeBlot, this)
 
     ctx.restore()
-  },
+  }
 
-  makeBlot(blot) {
+  makeBlot (blot) {
     let { ctx, height, width } = this.state
     let { x, y, radius } = blot
 
@@ -105,13 +92,13 @@ let Ink = React.createClass({
 
     ctx.closePath()
     ctx.fill()
-  },
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.state.store.stop()
-  },
+  }
 
-  pushBlot(timeStamp, clientX, clientY) {
+  pushBlot (timeStamp, clientX, clientY) {
     let el = this.refs.canvas
 
     // 0.13 support
@@ -138,9 +125,9 @@ let Ink = React.createClass({
         y         : clientY - top
       })
     })
-  },
+  }
 
-  render() {
+  render () {
     let { density, height, width, touchEvents } = this.state
 
     return (
@@ -152,9 +139,9 @@ let Ink = React.createClass({
               onDragOver={ this._onRelease }
               { ...touchEvents } />
     )
-  },
+  }
 
-  _onPress(e) {
+  _onPress = (e) => {
     let { button, ctrlKey, clientX, clientY, changedTouches } = e
     let timeStamp = Date.now()
 
@@ -166,11 +153,12 @@ let Ink = React.createClass({
     } else if (button === MOUSE_LEFT && !ctrlKey) {
       this.pushBlot(timeStamp, clientX, clientY)
     }
-  },
+  }
 
-  _onRelease() {
+  _onRelease = () => {
     this.state.store.release(Date.now())
   }
-})
+
+}
 
 module.exports = Ink

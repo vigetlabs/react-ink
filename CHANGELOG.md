@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 6.2.0
+
+- Remove PropTypes and createClass usage to prevent deprecation
+  warnings with React 15.5.x
+
 ## 6.1.1
 
 - Fix case where ink would hang when switching windows. [Thanks @hhaidar](https://github.com/vigetlabs/react-ink/pull/30)
