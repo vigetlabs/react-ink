@@ -98,6 +98,22 @@ class Ink extends React.PureComponent {
     this.state.store.stop()
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.touched && nextProps.touched !== this.props.touched) {
+      let el = this.refs.canvas
+
+      // 0.13 support
+      if (el instanceof window.HTMLCanvasElement === false) {
+        el = el.getDOMNode()
+      }
+      let { top, bottom, left, right } = el.getBoundingClientRect()
+      let height  = bottom - top
+      let width   = right - left
+      this.pushBlot(Date.now(), left + width/2, top + height/2)
+      setTimeout(()=> {this.state.store.release(Date.now())}, 100)
+    }
+  }
+
   pushBlot (timeStamp, clientX, clientY) {
     let el = this.refs.canvas
 
