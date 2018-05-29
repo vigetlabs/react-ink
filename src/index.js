@@ -16,6 +16,7 @@ let Equations = require('./util/equations')
 class Ink extends React.PureComponent {
   static defaultProps = {
     background: true,
+    className: 'ink',
     duration: 1000,
     opacity: 0.25,
     radius: 150,
@@ -98,7 +99,7 @@ class Ink extends React.PureComponent {
   }
 
   pushBlot(timeStamp, clientX, clientY) {
-    let el = this.refs.canvas
+    let el = this.canvas
 
     // 0.13 support
     if (el instanceof window.HTMLCanvasElement === false) {
@@ -126,13 +127,17 @@ class Ink extends React.PureComponent {
     })
   }
 
+  setCanvas(el) {
+    this.canvas = el
+  }
+
   render() {
-    let { density, height, width, touchEvents } = this.state
+    let { className, density, height, width, touchEvents } = this.state
 
     return (
       <canvas
-        className="ink"
-        ref="canvas"
+        className={className}
+        ref={this.setCanvas.bind(this)}
         style={{ ...STYLE, ...this.props.style }}
         height={height * density}
         width={width * density}
