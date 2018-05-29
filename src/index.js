@@ -4,51 +4,50 @@
  * events with a rippling pool.
  */
 
-let HAS_TOUCH  = require('./util/hasTouch')
+let HAS_TOUCH = require('./util/hasTouch')
 let MOUSE_LEFT = 0
 let pixelRatio = require('./util/pixelRatio')
-let React      = require('react')
-let STYLE      = require('./style')
-let Store      = require('./util/store')
-let TAU        = Math.PI * 2
-let Equations  = require('./util/equations')
+let React = require('react')
+let STYLE = require('./style')
+let Store = require('./util/store')
+let TAU = Math.PI * 2
+let Equations = require('./util/equations')
 
 class Ink extends React.PureComponent {
-
   static defaultProps = {
-    background : true,
-    duration   : 1000,
-    opacity    : 0.25,
-    radius     : 150,
-    recenter   : true,
-    hasTouch   : HAS_TOUCH
+    background: true,
+    duration: 1000,
+    opacity: 0.25,
+    radius: 150,
+    recenter: true,
+    hasTouch: HAS_TOUCH
   }
 
-  constructor (props) {
+  constructor(props) {
     super(...arguments)
 
     this.state = {
-      color       : 'transparent',
-      density     : 1,
-      height      : 0,
-      store       : Store(this.tick),
-      touchEvents : this.touchEvents(),
-      width       : 0
+      color: 'transparent',
+      density: 1,
+      height: 0,
+      store: Store(this.tick),
+      touchEvents: this.touchEvents(),
+      width: 0
     }
   }
 
-  touchEvents () {
+  touchEvents() {
     if (this.props.hasTouch) {
       return {
-        onTouchStart  : this._onPress,
-        onTouchEnd    : this._onRelease,
-        onTouchCancel : this._onRelease
+        onTouchStart: this._onPress,
+        onTouchEnd: this._onRelease,
+        onTouchCancel: this._onRelease
       }
     } else {
       return {
-        onMouseDown   : this._onPress,
-        onMouseUp     : this._onRelease,
-        onMouseLeave  : this._onRelease
+        onMouseDown: this._onPress,
+        onMouseUp: this._onRelease,
+        onMouseLeave: this._onRelease
       }
     }
   }
@@ -74,7 +73,7 @@ class Ink extends React.PureComponent {
     ctx.restore()
   }
 
-  makeBlot (blot) {
+  makeBlot(blot) {
     let { ctx, height, width } = this.state
     let { x, y, radius } = blot
 
@@ -94,11 +93,11 @@ class Ink extends React.PureComponent {
     ctx.fill()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.state.store.stop()
   }
 
-  pushBlot (timeStamp, clientX, clientY) {
+  pushBlot(timeStamp, clientX, clientY) {
     let el = this.refs.canvas
 
     // 0.13 support
@@ -109,39 +108,41 @@ class Ink extends React.PureComponent {
     let { top, bottom, left, right } = el.getBoundingClientRect()
     let { color } = window.getComputedStyle(el)
 
-    let ctx     = this.state.ctx || el.getContext('2d')
+    let ctx = this.state.ctx || el.getContext('2d')
     let density = pixelRatio(ctx)
-    let height  = bottom - top
-    let width   = right - left
-    let radius  = Equations.getMaxRadius(height, width, this.props.radius)
+    let height = bottom - top
+    let width = right - left
+    let radius = Equations.getMaxRadius(height, width, this.props.radius)
 
     this.setState({ color, ctx, density, height, width }, () => {
       this.state.store.add({
-        duration  : this.props.duration,
-        mouseDown : timeStamp,
-        mouseUp   : 0,
-        radius    : radius,
-        x         : clientX - left,
-        y         : clientY - top
+        duration: this.props.duration,
+        mouseDown: timeStamp,
+        mouseUp: 0,
+        radius: radius,
+        x: clientX - left,
+        y: clientY - top
       })
     })
   }
 
-  render () {
+  render() {
     let { density, height, width, touchEvents } = this.state
 
     return (
-      <canvas className="ink"
-              ref="canvas"
-              style={{ ...STYLE, ...this.props.style }}
-              height={ height * density }
-              width={ width * density }
-              onDragOver={ this._onRelease }
-              { ...touchEvents } />
+      <canvas
+        className="ink"
+        ref="canvas"
+        style={{ ...STYLE, ...this.props.style }}
+        height={height * density}
+        width={width * density}
+        onDragOver={this._onRelease}
+        {...touchEvents}
+      />
     )
   }
 
-  _onPress = (e) => {
+  _onPress = e => {
     let { button, ctrlKey, clientX, clientY, changedTouches } = e
     let timeStamp = Date.now()
 
@@ -158,7 +159,6 @@ class Ink extends React.PureComponent {
   _onRelease = () => {
     this.state.store.release(Date.now())
   }
-
 }
 
 module.exports = Ink

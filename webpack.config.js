@@ -3,11 +3,10 @@
 const base = require('./webpack.config')
 const path = require('path')
 
-module.exports = function (env) {
+module.exports = function(env) {
   const isExample = env === 'example'
 
   let config = {
-
     entry: {
       ink: isExample ? './example/index.js' : './src/index.js'
     },
@@ -22,15 +21,15 @@ module.exports = function (env) {
     module: {
       rules: [
         {
-          test    : /\.jsx*$/,
-          exclude : /node_modules/,
-          loader  : 'eslint-loader',
-          enforce : 'pre'
+          test: /\.jsx*$/,
+          exclude: /node_modules/,
+          loader: 'eslint-loader',
+          enforce: 'pre'
         },
-          {
-          test    : /\.jsx*$/,
-          exclude : /node_modules/,
-          loader  : 'babel-loader'
+        {
+          test: /\.jsx*$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader'
         }
       ]
     },

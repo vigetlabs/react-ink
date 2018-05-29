@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 6.3.0
+
+- Replace legacy string refs
+
 ## 6.2.0
 
 - Remove PropTypes and createClass usage to prevent deprecation

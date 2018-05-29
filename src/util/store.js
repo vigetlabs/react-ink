@@ -6,15 +6,15 @@
 
 var Equations = require('./equations')
 
-let killStale = ({ mouseUp, duration }) => !mouseUp || (Date.now() - mouseUp) < duration
+let killStale = ({ mouseUp, duration }) =>
+  !mouseUp || Date.now() - mouseUp < duration
 
 module.exports = function(publicize) {
-  let _data    = []
+  let _data = []
   let _playing = false
   let _frame
 
   let Store = {
-
     each(callback, scope) {
       for (var i = 0, l = _data.length; i < l; i++) {
         callback.call(scope, _data[i])
@@ -63,11 +63,10 @@ module.exports = function(publicize) {
     release(time) {
       for (let i = _data.length - 1; i >= 0; i--) {
         if (!_data[i].mouseUp) {
-          return _data[i].mouseUp = time
+          return (_data[i].mouseUp = time)
         }
       }
     }
-
   }
 
   return Store

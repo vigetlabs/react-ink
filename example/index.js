@@ -1,10 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Ink   from '../src/index'
-import Test  from 'react-dom/test-utils'
+import Ink from '../src/index'
+import Test from 'react-dom/test-utils'
 
 class Component extends React.Component {
-
   render() {
     return (
       <div>
@@ -17,7 +16,6 @@ class Component extends React.Component {
       </div>
     )
   }
-
 }
 
 let playing = false
