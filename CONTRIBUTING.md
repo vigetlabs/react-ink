@@ -47,7 +47,7 @@ The following steps are required to push a new release:
 1. Update changelog
 2. `yarn version <major,minor,patch>`
 3. `git push --tags`
-4. `npm release release`
+4. `npm publish`
 
 ## Conventions
 
