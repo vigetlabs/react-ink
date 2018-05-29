@@ -3,6 +3,7 @@
 ## 6.3.0
 
 - Replace legacy string refs
+- Allow className to be overriden
 
 ## 6.2.0
 
