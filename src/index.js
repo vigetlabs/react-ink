@@ -102,7 +102,7 @@ class Ink extends React.PureComponent {
     let el = this.canvas
 
     // 0.13 support
-    if (el instanceof window.HTMLCanvasElement === false) {
+    if (el.getDOMNode && 'function' === typeof el.getDOMNode) {
       el = el.getDOMNode()
     }
 
