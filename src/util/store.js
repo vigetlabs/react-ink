@@ -4,12 +4,12 @@
  * so that <Ink /> can focus on rendering them.
  */
 
-var Equations = require('./equations')
+import { getBlotOuterOpacity } from './equations'
 
 let killStale = ({ mouseUp, duration }) =>
   !mouseUp || Date.now() - mouseUp < duration
 
-module.exports = function(publicize) {
+export function Store(publicize) {
   let _data = []
   let _playing = false
   let _frame
@@ -37,7 +37,7 @@ module.exports = function(publicize) {
       let answer = 0
 
       for (var i = 0, l = _data.length; i < l; i++) {
-        answer += Equations.getBlotOuterOpacity(_data[i], opacity)
+        answer += getBlotOuterOpacity(_data[i], opacity)
       }
 
       return answer

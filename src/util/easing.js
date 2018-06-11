@@ -5,6 +5,6 @@
  * @d is the total time of the tween.
  */
 
-module.exports = function easeOutQuint(t, b, c, d) {
+export function easeOutQuint(t, b, c, d) {
   return c * ((t = t / d - 1) * t * t * t * t + 1) + b
 }

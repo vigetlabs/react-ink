@@ -1,7 +1,7 @@
 // Good stuff here:
 // http://www.html5rocks.com/en/tutorials/canvas/hidpi/
 
-module.exports = context => {
+export const pixelRatio = context => {
   let devicePixelRatio = window.devicePixelRatio || 1
   let backingStoreRatio =
     context.webkitBackingStorePixelRatio ||

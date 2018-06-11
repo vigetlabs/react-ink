@@ -4,10 +4,11 @@
   "description": "A React component for adding material design style ink.",
   "main": "dist/ink.js",
   "scripts": {
-    "start": "webpack-dev-server --env=example",
-    "test": "eslint {src,example}/**/*.js",
-    "build": "webpack -p",
-    "prepublish": "npm run build",
+    "start": "webpack-dev-server --mode=development",
+    "build": "./bin/bundle",
+    "build:example": "webpack-dev-server --mode=production",
+    "prepublish": "yarn build",
+    "lint": "eslint . --cache --cache-location=node_modules/ --ignore-path=.gitignore",
     "format": "prettier --write './{src,example}/**/*.js' './*.js'"
   },
   "repository": {
@@ -41,5 +42,11 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
+  },
+  "dependencies": {
+    "rollup": "^0.60.2",
+    "rollup-plugin-buble": "^0.19.2",
+    "rollup-plugin-filesize": "^2.0.0",
+    "rollup-plugin-uglify": "^4.0.0"
   }
 }

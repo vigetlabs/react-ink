@@ -1,53 +1,31 @@
-'use strict'
-
-const base = require('./webpack.config')
 const path = require('path')
 
-module.exports = function(env) {
-  const isExample = env === 'example'
+module.exports = {
+  entry: './example/index.js',
 
-  let config = {
-    entry: {
-      ink: isExample ? './example/index.js' : './src/index.js'
-    },
+  output: {
+    path: path.resolve('example'),
+    filename: '[name].js'
+  },
 
-    devtool: 'inline-source-map',
+  module: {
+    rules: [
+      {
+        test: /\.jsx*$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        enforce: 'pre'
+      },
+      {
+        test: /\.jsx*$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      }
+    ]
+  },
 
-    output: {
-      path: path.resolve(isExample ? './example' : './dist'),
-      filename: '[name].js'
-    },
-
-    module: {
-      rules: [
-        {
-          test: /\.jsx*$/,
-          exclude: /node_modules/,
-          loader: 'eslint-loader',
-          enforce: 'pre'
-        },
-        {
-          test: /\.jsx*$/,
-          exclude: /node_modules/,
-          loader: 'babel-loader'
-        }
-      ]
-    },
-
-    devServer: {
-      contentBase: path.resolve('./example'),
-      publicPath: '/',
-      quiet: true
-    }
+  devServer: {
+    contentBase: path.resolve('./example'),
+    publicPath: '/'
   }
-
-  if (isExample === false) {
-    config.output.libraryTarget = 'commonjs2'
-
-    config.externals = {
-      react: 'react'
-    }
-  }
-
-  return config
 }

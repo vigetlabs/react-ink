@@ -1,0 +1,49 @@
+#!/usr/bin/env node
+
+'use strict'
+
+const rollup = require('rollup')
+const buble = require('rollup-plugin-buble')
+const uglify = require('rollup-plugin-uglify').uglify
+const filesize = require('rollup-plugin-filesize')
+const path = require('path')
+
+async function build(config) {
+  let bundle = await rollup.rollup({
+    input: config.entry,
+    plugins: [
+      buble(),
+      uglify({
+        compress: true,
+        mangle: {
+          toplevel: true,
+          properties: {
+            regex: /^_/
+          }
+        }
+      }),
+      filesize()
+    ],
+    external: ['react', 'react-dom']
+  })
+
+  await bundle.write({
+    globals: {
+      react: 'React'
+    },
+    file: 'dist',
+    format: 'cjs',
+    name: config.name,
+    sourcemap: true
+  })
+}
+
+const packages = [
+  {
+    name: 'MicrocosmInk',
+    entry: path.resolve('src/index.js'),
+    output: path.resolve('dist', 'ink.js')
+  }
+]
+
+packages.forEach(build)

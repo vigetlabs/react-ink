@@ -6,4 +6,4 @@ if (typeof window !== 'undefined') {
     (window.DocumentTouch && document instanceof window.DocumentTouch)
 }
 
-module.exports = bool
+export const HAS_TOUCH = bool
