@@ -1,6 +1,6 @@
 *.map
 
-example/example.build.js
-example/example.build.js.map
+example/main.js
+example/main.js.map
 node_modules
 dist
