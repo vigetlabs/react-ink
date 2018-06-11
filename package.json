@@ -22,7 +22,7 @@
   "author": "Nate Hunzaker",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^16.3.14",
+    "@types/react": "^16.3.17",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",
@@ -31,12 +31,12 @@
     "babel-preset-stage-2": "^6.24.1",
     "eslint": "^4.19.1",
     "eslint-loader": "^2.0.0",
-    "eslint-plugin-react": "^7.8.2",
-    "prettier": "^1.13.2",
+    "eslint-plugin-react": "^7.9.1",
+    "prettier": "^1.13.5",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "webpack": "^4.10.0",
-    "webpack-cli": "^2.1.4",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.3",
     "webpack-dev-server": "^3.1.4"
   },
   "prettier": {

@@ -13,18 +13,16 @@ Add the Material Design ripple effect to React component.
 Ink must be placed within another component with a position is not `static` (so `relative`, `fixed`, or `absolute`).
 
 ```js
-var React = require('react');
-var Ink = require('react-ink');
+import React from 'react'
+import Ink from 'react-ink'
 
-module.exports = React.createClass({
-  render() {
-    return (
-      <button style={{ position: "relative" }}>
-        <Ink />
-      </button>
-    );
-  }
-});
+const InkeyButton () => {
+  return (
+    <button style={{ position: "relative" }}>
+      <Ink />
+    </button>
+  )
+}
 ```
 
 There are several options available for how `<Ink />` renders, see the [`getDefaultProps()` declaration](https://github.com/vigetlabs/react-ink/blob/master/src/index.js#L33-L37), however descriptions follow:
