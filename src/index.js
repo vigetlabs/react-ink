@@ -5,11 +5,11 @@
  */
 
 import React from 'react'
-import { HAS_TOUCH } from './util/hasTouch'
 import { pixelRatio } from './util/pixelRatio'
 import { STYLE } from './style'
 import { Store } from './util/store'
 import { merge } from './util/merge'
+import { touchMonitor } from './util/touch-monitor'
 import {
   getBlotScale,
   getBlotOpacity,
@@ -27,23 +27,21 @@ const defaultProps = {
   duration: 1000,
   opacity: 0.25,
   radius: 150,
-  recenter: true,
-  hasTouch: HAS_TOUCH
+  recenter: true
 }
 
 export default class Ink extends React.PureComponent {
   constructor(props) {
-    super(...arguments)
+    super(props)
 
     this.state = {
       color: 'transparent',
       density: 1,
       height: 0,
       store: Store(this.tick.bind(this)),
-      width: 0
+      width: 0,
+      hasTouch: false
     }
-
-    this.touchEvents = this.touchEvents()
   }
 
   touchEvents() {
@@ -103,7 +101,12 @@ export default class Ink extends React.PureComponent {
     ctx.fill()
   }
 
+  componentDidMount() {
+    this.ignoreTouch = touchMonitor(() => this.setState({ hasTouch: true }))
+  }
+
   componentWillUnmount() {
+    this.ignoreTouch()
     this.state.store.stop()
   }
 
@@ -153,7 +156,7 @@ export default class Ink extends React.PureComponent {
         onDragOver: this._onRelease,
         style: merge(STYLE, style)
       },
-      this.touchEvents
+      this.touchEvents()
     )
 
     return React.createElement('canvas', props)
