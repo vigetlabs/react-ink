@@ -19,7 +19,7 @@
     "react",
     "material design"
   ],
-  "author": "Nate Hunzaker",
+  "author": "Viget Labs <developers@viget.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/react": "^16.3.17",
@@ -35,6 +35,10 @@
     "prettier": "^1.13.5",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "rollup": "^0.60.2",
+    "rollup-plugin-buble": "^0.19.2",
+    "rollup-plugin-filesize": "^2.0.0",
+    "rollup-plugin-uglify": "^4.0.0",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.3",
     "webpack-dev-server": "^3.1.4"
@@ -42,11 +46,5 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
-  },
-  "dependencies": {
-    "rollup": "^0.60.2",
-    "rollup-plugin-buble": "^0.19.2",
-    "rollup-plugin-filesize": "^2.0.0",
-    "rollup-plugin-uglify": "^4.0.0"
   }
 }
