@@ -26,7 +26,6 @@ const defaultProps = {
   className: 'ink',
   duration: 1000,
   opacity: 0.25,
-  radius: 150,
   recenter: true,
   hasTouch: HAS_TOUCH
 }

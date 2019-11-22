@@ -22,7 +22,7 @@ function getRadius(blot) {
 }
 
 export function getMaxRadius(height, width, radius) {
-  return min(max(height, width) * 0.5, radius)
+  return radius || min(max(height, width) * 0.6)
 }
 
 export function getBlotOpacity(blot, opacity) {
@@ -37,11 +37,11 @@ export function getBlotOuterOpacity(blot, opacity) {
 }
 
 export function getBlotShiftX(blot, size, width) {
-  return min(1, getRadius(blot) / size * 2 / SQRT_2) * (width / 2 - blot.x)
+  return min(1, ((getRadius(blot) / size) * 2) / SQRT_2) * (width / 2 - blot.x)
 }
 
 export function getBlotShiftY(blot, size, height) {
-  return min(1, getRadius(blot) / size * 2 / SQRT_2) * (height / 2 - blot.y)
+  return min(1, ((getRadius(blot) / size) * 2) / SQRT_2) * (height / 2 - blot.y)
 }
 
 export function getBlotScale(blot) {
