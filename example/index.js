@@ -8,7 +8,7 @@ class Component extends React.Component {
     return (
       <div>
         <h1>Click anywhere!</h1>
-        <Ink ref="background" />
+        <Ink ref="background" radius={150} />
         <button style={{ position: 'relative' }} onClick={toggle}>
           Toggle Stress Test
           <Ink key="__ink" />
