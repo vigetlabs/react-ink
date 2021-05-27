@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 6.4.0
+## 6.5.0
 
 - Fix the `className` prop. Previous versions incorrectly referenced className from component state versus props. https://github.com/vigetlabs/react-ink/pull/46
 - Update the `radius` prop to default to the max value between width and height of the component parent element. This update removes `radius` from default props, where the previous value was `150`. https://github.com/vigetlabs/react-ink/pull/45
