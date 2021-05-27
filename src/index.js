@@ -140,8 +140,8 @@ export default class Ink extends React.PureComponent {
   }
 
   render() {
-    let { className, density, height, width } = this.state
-    let { style } = this.props
+    let { density, height, width } = this.state
+    let { className, style } = this.props
 
     let props = merge(
       {
