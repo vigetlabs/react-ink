@@ -1,6 +1,6 @@
 {
   "name": "react-ink",
-  "version": "6.5.0",
+  "version": "6.5.1",
   "description": "A React component for adding material design style ink.",
   "main": "dist/ink.js",
   "scripts": {
