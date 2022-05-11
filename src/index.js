@@ -1,6 +1,6 @@
 /**
  * Ink
- * Fills a container with an SVG object that provides feedback on mouse/touch
+ * Fills a container with a canvas object that provides feedback on mouse/touch
  * events with a rippling pool.
  */
 
@@ -149,7 +149,7 @@ export default class Ink extends React.PureComponent {
         ref: this.setCanvas.bind(this),
         height: height * density,
         width: width * density,
-        onDragOver: this._onRelease,
+        onDragOver: this._onRelease.bind(this),
         style: merge(STYLE, style)
       },
       this.touchEvents
