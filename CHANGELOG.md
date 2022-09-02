@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 6.5.2
+
+- Fix `_onRelease` binding in onDragOver handler (#62). Thanks, @lemming.
+
+## 6.5.1
+
+- Miscellaneous security updates via dependabot.
+
 ## 6.5.0
 
 - Fix the `className` prop. Previous versions incorrectly referenced className from component state versus props. https://github.com/vigetlabs/react-ink/pull/46
