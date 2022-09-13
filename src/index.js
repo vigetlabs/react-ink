@@ -145,6 +145,7 @@ export default class Ink extends React.PureComponent {
 
     let props = merge(
       {
+        'aria-hidden': true,
         className: className,
         ref: this.setCanvas.bind(this),
         height: height * density,
