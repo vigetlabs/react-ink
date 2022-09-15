@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 6.5.3
+
+- Prevent react-ink from altering the accessibility tree (#64). Thanks, @Chudesnov.
+
 ## 6.5.2
 
 - Fix `_onRelease` binding in onDragOver handler (#62). Thanks, @lemming.
