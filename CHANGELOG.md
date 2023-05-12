@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 6.5.3
+## 6.5.4
 
 - Prevent react-ink from altering the accessibility tree (#64). Thanks, @Chudesnov.
 
