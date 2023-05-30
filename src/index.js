@@ -135,28 +135,26 @@ export default class Ink extends React.PureComponent {
     })
   }
 
-  setCanvas(el) {
+  setCanvas = (el) => {
     this.canvas = el
   }
 
   render() {
     let { density, height, width } = this.state
     let { className, style } = this.props
-
-    let props = merge(
-      {
-        'aria-hidden': true,
-        className: className,
-        ref: this.setCanvas.bind(this),
-        height: height * density,
-        width: width * density,
-        onDragOver: this._onRelease.bind(this),
-        style: merge(STYLE, style)
-      },
-      this.touchEvents
-    )
-
-    return React.createElement('canvas', props)
+  
+    let props = {
+      'aria-hidden': true,
+      className: className,
+      ref: this.setCanvas.bind(this),
+      height: height * density,
+      width: width * density,
+      onDragOver: this._onRelease.bind(this),
+      style: merge(STYLE, style),
+      ...this.touchEvents
+    }
+  
+    return <canvas {...props} />
   }
 
   _onPress(event) {
