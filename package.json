@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode=development",
     "build": "./bin/bundle",
-    "build:example": "webpack --mode=production",
+    "build:example": "NODE_OPTIONS='--openssl-legacy-provider' webpack --mode=production",
     "prepublish": "yarn build",
     "lint": "eslint . --cache --cache-location=node_modules/ --ignore-path=.gitignore",
     "format": "prettier --write './{src,example}/**/*.js' './*.js'"
